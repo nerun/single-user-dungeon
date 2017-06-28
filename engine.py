@@ -84,7 +84,7 @@ class MudArea:
     else:
      objects[objects.index(i)] = 'A ' + i + ' is here.'
    objectsStr = '\n'.join(objects)
-   if (objects != ''):
+   if (len(objects) >= 1):
     obsight = prcolor(3,'\n' + objectsStr)
    else:
     obsight = ''
