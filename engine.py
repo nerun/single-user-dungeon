@@ -20,7 +20,7 @@ class MudPlayer:
   self.name = name
   self.health = 100
  def move(self, area):
-  return area.sight + '\n'
+  return area.view() + '\n'
  def take(self, obj):
   self.inventory[obj.name] = obj
   return self.name + ' puts ' + obj.name + ' in his inventory.\n'
@@ -170,7 +170,7 @@ class MudCommand:
    self.area = area
    return self.char.move(self.area)
   else:
-   return '\nThere seems to be nothing that way.\n'
+   return 'There seems to be nothing that way.\n'
 
  def n(self, args):
   """\n N
@@ -214,7 +214,7 @@ class MudCommand:
 class MudGame:
  def __init__(self, char, area):
   self.cmd = MudCommand(char, area)
-  self.FirstSight = area.sight
+  self.FirstSight = area.view() + '\n'
 
  def run(self):
   print self.FirstSight
