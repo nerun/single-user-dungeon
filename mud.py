@@ -1,5 +1,11 @@
+# -*- coding: cp860 -*-
 # This file define what exists in the world.
+import os
 from engine import *
+
+# Create subdirectory "rooms" if it do not exist
+if os.path.isdir('./rooms') is False:
+ os.mkdir('./rooms')
 
 # Objects (name, description, on touch, on use)
 rose = MudObject('rose', 'a red blossom with thorns.', 'the thorns hurt your finger!', 'you wear it to adorn your clothes.')

@@ -1,6 +1,7 @@
 import sys
 from libraries import *
 
+# CLASS OBJECTS ================================================================
 class MudObject:
  def __init__(self, name, sight, collide = 'Nothing happens.', usability = 'Unusable.'):
   self.name = name
@@ -14,12 +15,14 @@ class MudObject:
  def use(self):
   return self.usability
 
+# CLASS PLAYER =================================================================
 class MudPlayer:
  def __init__(self, name):
   self.inventory = {}
   self.name = name
   self.health = 100
  def move(self, area):
+  ClearScreen()
   return area.view() + '\n'
  def take(self, obj):
   self.inventory[obj.name] = obj
@@ -35,12 +38,14 @@ class MudPlayer:
   else:
    return 'You do not have ' + what + '.\n'
 
+# CLASS AREA ===================================================================
 class MudArea:
  def __init__(self, sight):
   self.objects = {}
   self.panorama = {}
   self.sight = sight
   self.inverted_directions = {'north':'south', 'south':'north', 'east':'west', 'west':'east'}
+
  def addArea(self, direction, area):
   area.panorama[self.inverted_directions[direction]] = self
   self.panorama[direction] = area
@@ -50,20 +55,24 @@ class MudArea:
    return self.panorama[args]
   except KeyError:
    return None
+
  def addObject(self, name, obj):
   if obj != None:
    self.objects[name] = obj
    return name + ' was dropped...\n'
+
  def getObject(self, name):
   if self.objects.has_key(name):
    return self.objects.pop(name)
   else:
    return 'There is no ' + name + ' around!\n'
+
  def touchObject(self, name):
   if self.objects.has_key(name):
    return self.objects[name].touch()
   else:
    return 'There is no ' + name + ' around!\n'
+
  def view(self, args = 'around'):
   if (args != '' and args != 'around'):
    try:
@@ -90,6 +99,7 @@ class MudArea:
     obsight = ''
    return self.sight + obsight
 
+# CLASS COMMANDS ===============================================================
 class MudCommand:
  """\n Available commands are:
  drop, exit, get, help, inventory, look, move, say, touch, use
@@ -154,6 +164,7 @@ class MudCommand:
  def look(self, args):
   """\n LOOK (alias: l)
  Show what you see when you look around.\n"""
+  ClearScreen()
   return self.area.view(args) + '\n'
 
  def l(self, args):
@@ -211,6 +222,7 @@ class MudCommand:
  Arguments should be the name of an item inside character inventory.\n"""
   return self.char.use(args)
 
+# CLASS GAME ===================================================================
 class MudGame:
  def __init__(self, char, area):
   self.cmd = MudCommand(char, area)
