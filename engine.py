@@ -20,7 +20,7 @@ class MudPlayer:
   self.name = name
   self.health = 100
  def move(self, area):
-  return 'You moves to:\n\n' + area.sight + '\n'
+  return area.sight + '\n'
  def take(self, obj):
   self.inventory[obj.name] = obj
   return self.name + ' puts ' + obj.name + ' in his inventory.\n'
@@ -154,7 +154,7 @@ class MudCommand:
  def look(self, args):
   """\n LOOK (alias: l)
  Show what you see when you look around.\n"""
-  return 'You see:\n\n' + self.area.view(args) + '\n'
+  return self.area.view(args) + '\n'
 
  def l(self, args):
   """\n L
