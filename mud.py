@@ -1,24 +1,40 @@
 # -*- coding: cp860 -*-
 # This file define what exists in the world.
 import os
+from libraries import *
 from engine import *
 
-# Create subdirectory "rooms" if it do not exist
-if os.path.isdir('./rooms') is False:
- os.mkdir('./rooms')
+# Defines default paths and valid extension for files
+RoomsPath = './rooms/'
+ObjectsPath = './objects/'
+ValidExt = '.txt'
 
-# Objects (name, description, on touch, on use)
-rose = MudObject('rose', 'a red blossom with thorns.', 'the thorns hurt your finger!', 'you wear it to adorn your clothes.')
-poo = MudObject('poo', 'stinky and brown.', 'it looks soft, brown and definitely disgusting.', 'you are sick, you know that?')
-sparrow = MudObject('sparrow', 'small with thick beak and brown color.', 'it looks delicate.', 'tweet! Tweet!')
-apple = MudObject('apple', 'a red fruit the size of a closed fist.', 'hard but not so, and smooth.', 'hmmm delicious!')
+# Create subdirectories if don't exist
+if os.path.isdir(RoomsPath) is False:
+ os.mkdir(RoomsPath)
+if os.path.isdir(ObjectsPath) is False:
+ os.mkdir(ObjectsPath)
 
-# Areas
-port = MudArea(prcolor(6,'Port Codfish\n')+'[ Exits: n s w ]')
-beach = MudArea(prcolor(6,'Drowned man beach\n')+'[ Exits: s ]')
-village = MudArea(prcolor(6,'Boot fishers village\n')+'[ Exits: e ]')
-house = MudArea(prcolor(6,'Customhouse\n')+'[ Exits: e ]')
-maiden = MudArea(prcolor(6,'Raped maiden beach\n')+'[ Exits: n w ]')
+# OBJECTS
+# Read folder "objects" and create dictionary reading files in there
+BaseObjectsDic = FilesToDict(ObjectsPath, ValidExt)
+# Void final dictionary of objects
+ObjectsDic = {}
+# Fulfill final dictionary of objects (object name: atribute 1, attribute 2 etc)
+for i in BaseObjectsDic:
+ ObjectsDic[BaseObjectsDic[i][0]] = MudObject(BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2],BaseObjectsDic[i][3])
+
+# ROOMS
+# Read folder "rooms" and create dictionary reading files in there
+BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
+# Void final dictionary of rooms
+RoomsDic = {}
+# Fulfill final dictionary of rooms (object name: atribute 1, attribute 2 etc)
+for i in BaseRoomsDic:
+ desc = ShowRoom(BaseRoomsDic, BaseRoomsDic[i][0])
+ RoomsDic[BaseRoomsDic[i][0]] = MudArea(desc)
+
+# ======= TO DO ==============================================================
 
 # Attaching interactive stuff to areas
 beach.addObject('crap', poo)
