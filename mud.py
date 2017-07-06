@@ -24,7 +24,7 @@ ObjectsDic = {}
 # Fulfill final dictionary of objects (object name: atribute 1, attribute 2 etc)
 for i in BaseObjectsDic:
 # name: Class(name, look, touch, use)
- ObjectsDic[BaseObjectsDic[i]] = MudObject(BaseObjectsDic[i],BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
+ ObjectsDic[i] = MudObject(i,BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
 
 # ROOMS
 # Read folder "rooms" and create dictionary reading files in there
