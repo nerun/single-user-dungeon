@@ -54,7 +54,8 @@ def FilesToDict(Path, Ext, IsRoom='no'):
    if IsRoom.lower() == "yes":
     thisfile[1] = thisfile[1].replace('\n','')
     thisfile[2] = thisfile[2].replace('\n','')
-  Dict[thisfile[0]] = thisfile[1:]
+  thisfiletuple = tuple(thisfile)
+  Dict[thisfiletuple[0]] = thisfiletuple[1:]
 
  return Dict
 

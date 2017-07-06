@@ -17,22 +17,26 @@ if os.path.isdir(ObjectsPath) is False:
 
 # OBJECTS
 # Read folder "objects" and create dictionary reading files in there
+# name: (look, touch, use)
 BaseObjectsDic = FilesToDict(ObjectsPath, ValidExt)
 # Void final dictionary of objects
 ObjectsDic = {}
 # Fulfill final dictionary of objects (object name: atribute 1, attribute 2 etc)
 for i in BaseObjectsDic:
- ObjectsDic[BaseObjectsDic[i][0]] = MudObject(BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2],BaseObjectsDic[i][3])
+# name: Class(name, look, touch, use)
+ ObjectsDic[BaseObjectsDic[i]] = MudObject(BaseObjectsDic[i],BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
 
 # ROOMS
 # Read folder "rooms" and create dictionary reading files in there
+# IDs : (Exits, Room title, Room description)
 BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
 # Void final dictionary of rooms
 RoomsDic = {}
-# Fulfill final dictionary of rooms (object name: atribute 1, attribute 2 etc)
+# Fulfill final dictionary of rooms
 for i in BaseRoomsDic:
- desc = ShowRoom(BaseRoomsDic, BaseRoomsDic[i][0])
- RoomsDic[BaseRoomsDic[i][0]] = MudArea(desc)
+ desc = ShowRoom(BaseRoomsDic, i)
+# ID : Class(string: Room title, Exits, Room description)
+ RoomsDic[i] = MudArea(desc)
 
 # ======= TO DO ==============================================================
 
