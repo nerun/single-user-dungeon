@@ -26,7 +26,7 @@ def ClearScreen(lines=100):
   print '\n' * lines
 
 # CREATE A DICTIONARY READING FILES IN A FOLDER
-# FilesToDict(*Path, ValidExt, Is room put yes if not let blank)
+# FilesToDict(*Path, ValidExt, If is room then put yes if not let blank)
 def FilesToDict(Path, Ext, IsRoom='no'):
  ListOfFiles = glob.glob(Path + '*' + Ext)
  ListOfFilesB = copy.copy(ListOfFiles)

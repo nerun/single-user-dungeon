@@ -2,7 +2,7 @@ import sys
 from libraries import *
 
 # CLASS OBJECTS ================================================================
-class MudObject:
+class SudObject:
  def __init__(self, name, sight, collide = 'Nothing happens.', usability = 'Unusable.'):
   self.name = name
   self.sight = sight.capitalize()
@@ -16,7 +16,7 @@ class MudObject:
   return self.usability
 
 # CLASS PLAYER =================================================================
-class MudPlayer:
+class SudPlayer:
  def __init__(self, name):
   self.inventory = {}
   self.name = name
@@ -39,7 +39,7 @@ class MudPlayer:
    return 'You do not have ' + what + '.\n'
 
 # CLASS AREA ===================================================================
-class MudArea:
+class SudArea:
  def __init__(self, sight):
   self.objects = {}
   self.panorama = {}
@@ -100,12 +100,13 @@ class MudArea:
    return self.sight + obsight
 
 # CLASS COMMANDS ===============================================================
-class MudCommand:
+class SudCommand:
  """\n Available commands are:
- drop, exit, get, help, inventory, look, move, say, touch, use
+ drop (d), exit (x), get (g), help (h), inventory (i), look (l), move (n,s,e,w),
+ say (y), touch (t), use (u)
 
- For help with a specific command type "help command". For example: type
- "help drop" without quotes to get help with drop command.\n"""
+ For help with a specific command type "help command" or "h command". For
+ example: type "help drop" without quotes to get help with drop command.\n"""
  def __init__(self, char, area):
   self.char = char
   self.area = area
@@ -115,10 +116,15 @@ class MudCommand:
  Drops item from inventory to current area.\n"""
   return self.area.addObject(args, self.char.drop(args))
 
+ def d(self, args):
+  """\n D
+ Alias of drop.\n"""
+  return self.drop(args)
+
  def exit(self, args):
   """\n EXIT (alias: x)
  Leave the game.\n"""
-  print '\n Bye, bye!\n'
+  print prcolor(5,'\n Bye, bye!\n')
   sys.exit()
 
  def x(self, args):
@@ -150,6 +156,11 @@ class MudCommand:
      return getattr(self, args).__doc__
    except AttributeError:
      return prcolor(1,'Help topic not found.\n')
+
+ def h(self, args):
+  """\n H
+ Alias of help.\n"""
+  return self.help(args)
 
  def inventory(self, args):
   """\n INVENTORY (alias: i)
@@ -210,11 +221,21 @@ class MudCommand:
  quotes.\n"""
   return self.char.say(args)
 
+ def y(self, args):
+  """\n Y
+ Alias of say.\n"""
+  return self.say(args)
+
  def touch(self, args):
   """\n TOUCH
  Touches an item on the ground. Requires an argument. Arguments should be
  the name of an item on the ground.\n"""
   return self.area.touchObject(args)
+
+ def t(self, args):
+  """\n T
+ Alias of touch.\n"""
+  return self.touch(args)
 
  def use(self, args):
   """\n USE
@@ -222,10 +243,15 @@ class MudCommand:
  Arguments should be the name of an item inside character inventory.\n"""
   return self.char.use(args)
 
+ def u(self, args):
+  """\n U
+ Alias of use.\n"""
+  return self.use(args)
+
 # CLASS GAME ===================================================================
-class MudGame:
+class SudGame:
  def __init__(self, char, area):
-  self.cmd = MudCommand(char, area)
+  self.cmd = SudCommand(char, area)
   self.FirstSight = area.view() + '\n'
 
  def run(self):
