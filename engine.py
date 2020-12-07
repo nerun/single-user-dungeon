@@ -175,7 +175,8 @@ class SudCommand:
  def look(self, args):
   """\n LOOK (alias: l)
  Show what you see when you look around.\n"""
-  ClearScreen()
+  if args == "":
+    ClearScreen()
   return self.area.view(args) + '\n'
 
  def l(self, args):
