@@ -1,7 +1,7 @@
 # Anaconda SUD
 
 ## English
-It is a Single User Dungeon (SUD). A new concept that blends the elements of an adventure in text mode with the interactivity of a Multi User Dungeon (MUD). A sandbox type text game.
+SUD means for Single User Dungeon: a Multi User Dungeon (MUD) but for single player. An adventure in text mode with elements of both Roleplaying Games and sandbox PC games.
 
 This game is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on [his website](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 28th, 2008.
 
@@ -12,7 +12,7 @@ RUNNING:
 
 
 ## Português
-É um Single User Dungeon (SUD). Um conceito novo que mistura os elementos de uma aventura em modo texto com a interatividade de um Multi User Dungeon (MUD). Um jogo em modo texto do tipo sandbox.
+SUD significa "Single user Dungeon": um "Multi User Dungeon" (MUD), mas para um único jogador. Uma aventura em modo texto com elementos tanto dos Roleplaying Games quanto dos jogos sandbox para PCs.
 
 Este jogo está sendo desenvolvido a partir dos scripts criados por Tomas Varaneckas (Vilnius, Lithuania), e liberados em [seu site](http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) em 28 de Novembro de 2008.
 
