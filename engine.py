@@ -165,7 +165,10 @@ class SudCommand:
  def inventory(self, args):
   """\n INVENTORY (alias: i)
  displays inventory.\n"""
-  return self.char.name + ' has: ' + ', '.join(self.char.inventory)
+  if len(self.char.inventory) > 0:
+    return self.char.name + ' has:\n - ' + '\n - '.join(self.char.inventory) + '\n'
+  else:
+    return 'Your inventory is empty.\n'
 
  def i(self, args):
   """\n I
