@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 # This file define what exists in the world.
 import os
 from libraries import *
@@ -41,8 +42,6 @@ for i in BaseRoomsDic:
 # 'ID' : Class(string: Room title, Exits, Room description)
 # To call an area, use 'ID'
  RoomsDic[i] = SudArea(desc)
-
-# ======= TO DO ==============================================================
 
 # Attaching interactive stuff to areas
 RoomsDic['1'].addObject('flower', ObjectsDic['rose']) # porto
