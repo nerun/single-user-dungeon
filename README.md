@@ -5,10 +5,17 @@ SUD means for Single User Dungeon: it's like a Multi User Dungeon (MUD) but for 
 
 This game is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on [his website](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 28th, 2008.
 
+REQUIREMENTS:
+
+* Python 3+
+
 RUNNING:
+
 1. Windows: double click start.py
-1. Linux, in terminal: python start.py
-1. Type "help" while in game for commands
+
+2. Linux, in terminal: python start.py
+
+3. Type "help" while in game for commands
 
 
 ## Português
@@ -16,7 +23,14 @@ SUD significa "Single user Dungeon": é como um "Multi User Dungeon" (MUD), mas 
 
 Este jogo está sendo desenvolvido a partir dos scripts criados por Tomas Varaneckas (Vilnius, Lithuania), e liberados em [seu site](http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) em 28 de Novembro de 2008.
 
+REQUISITOS:
+
+* Python 3+
+
 RODANDO:
+
 1. Windows: duplo clique em start.py
-1. Linux, no terminal digite: python start.py
-1. Digite "help" durante o jogo para ver os comandos
+
+2. Linux, no terminal digite: python start.py
+
+3. Digite "help" durante o jogo para ver os comandos
