@@ -13,9 +13,9 @@ ValidExt = '.txt'
 
 # Create subdirectories if don't exist
 if os.path.isdir(RoomsPath) is False:
- os.mkdir(RoomsPath)
+    os.mkdir(RoomsPath)
 if os.path.isdir(ObjectsPath) is False:
- os.mkdir(ObjectsPath)
+    os.mkdir(ObjectsPath)
 
 # OBJECTS
 # Read folder "objects" and create dictionary reading files in there
@@ -26,7 +26,7 @@ ObjectsDic = {}
 # Fulfill final dictionary of objects (object name: atribute 1, attribute 2 etc)
 for i in BaseObjectsDic:
 # name: Class(name, look, touch, use)
- ObjectsDic[i] = SudObject(i,BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
+    ObjectsDic[i] = SudObject(i,BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
 
 print (ObjectsDic)
 
