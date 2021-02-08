@@ -6,8 +6,8 @@ class SudObject:
     def __init__(self, name, sight, collide = 'Nothing happens.', usability = 'Unusable.'):
         self.name = name
         self.sight = sight.capitalize()
-        self.collide = collide.capitalize() + '\n'
-        self.usability = usability.capitalize() + '\n'
+        self.collide = collide.capitalize()
+        self.usability = usability.capitalize()
     def view(self):
         return self.sight
     def touch(self):
@@ -21,19 +21,22 @@ class SudPlayer:
         self.inventory = {}
         self.name = name
         self.health = 100
+    def drop(self, name):
+        if name in self.inventory:
+            return self.inventory.pop(name)
     def move(self, area):
         ClearScreen()
-        return area.view() + '\n'
+        return area.view()
+    def say(self, what):
+        return 'You says: ' + what + '.\n'
     def take(self, obj):
         self.inventory[obj.name] = obj
         return self.name + ' puts ' + obj.name + ' in his inventory.\n'
-    def drop(self, name):
-        if self.inventory.has_key(name):
-            return self.inventory.pop(name)
-    def say(self, what):
-        return 'You says: ' + what + '.\n'
+    def touch(self, name):
+        if name in self.inventory:
+            return self.inventory[name].touch()
     def use(self, what):
-        if self.inventory.has_key(what):
+        if what in self.inventory:
             return self.inventory[what].use()
         else:
             return 'You do not have ' + what + '.\n'
@@ -62,13 +65,13 @@ class SudArea:
             return name + ' was dropped...\n'
 
     def getObject(self, name):
-        if self.objects.has_key(name):
+        if name in self.objects:
             return self.objects.pop(name)
         else:
             return 'There is no ' + name + ' around!\n'
 
     def touchObject(self, name):
-        if self.objects.has_key(name):
+        if name in self.objects:
             return self.objects[name].touch()
         else:
             return 'There is no ' + name + ' around!\n'
@@ -180,7 +183,7 @@ class SudCommand:
  Show what you see when you look around.\n"""
         if args == "":
             ClearScreen()
-        return self.area.view(args) + '\n'
+        return self.area.view(args)
 
     def l(self, args):
         """\n L
@@ -234,7 +237,10 @@ class SudCommand:
         """\n TOUCH
  Touches an item on the ground. Requires an argument. Arguments should be
  the name of an item on the ground.\n"""
-        return self.area.touchObject(args)
+        if args in self.char.inventory:
+            return self.char.touch(args)
+        else:
+            return self.area.touchObject(args)
 
     def t(self, args):
         """\n T
@@ -256,12 +262,15 @@ class SudCommand:
 class SudGame:
     def __init__(self, char, area):
         self.cmd = SudCommand(char, area)
-        self.FirstSight = area.view() + '\n'
+        self.FirstSight = area.view()
 
     def run(self):
         print(self.FirstSight)
         while True:
-            command = input('> ');
+            try:
+                command = input('> ');
+            except EOFError:
+                quit()
             self.parse(command)
 
     def parse(self, command):
