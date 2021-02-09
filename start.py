@@ -38,10 +38,10 @@ BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
 RoomsDic = {}
 # Fulfill final dictionary of rooms
 for i in BaseRoomsDic:
- desc = ShowRoom(BaseRoomsDic, i)
+    desc = ShowRoom(BaseRoomsDic, i)
 # 'ID' : Class(string: Room title, Exits, Room description)
 # To call an area, use 'ID'
- RoomsDic[i] = SudArea(desc)
+    RoomsDic[i] = SudArea(desc)
 
 # Attaching interactive stuff to areas
 RoomsDic['1'].addObject('flower', ObjectsDic['rose']) # porto

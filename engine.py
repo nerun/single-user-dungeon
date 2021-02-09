@@ -20,7 +20,10 @@ class SudPlayer:
     def __init__(self, name):
         self.inventory = {}
         self.name = name
-        self.health = 100
+        self.ST = 10
+        self.DX = 10
+        self.IQ = 10
+        self.HT = 10
     def drop(self, name):
         if name in self.inventory:
             return self.inventory.pop(name)
@@ -29,6 +32,15 @@ class SudPlayer:
         return area.view()
     def say(self, what):
         return 'You says: ' + what + '.\n'
+    def status(self, args):
+        status = """
+CHARACTER SHEET: %s
+  ST %d
+  DX %d
+  IQ %d
+  HT %d
+""" % (self.name, self.ST, self.DX, self.IQ, self.HT)
+        return status
     def take(self, obj):
         self.inventory[obj.name] = obj
         return self.name + ' puts ' + obj.name + ' in his inventory.\n'
@@ -233,6 +245,16 @@ class SudCommand:
  Alias of say.\n"""
         return self.say(args)
 
+    def status(self, args):
+        """\n STATUS
+ Show character sheet.\n"""
+        return self.char.status(args)
+
+    def st(self, args):
+        """\n ST
+ Alias of status.\n"""
+        return self.status(args)
+
     def touch(self, args):
         """\n TOUCH
  Touches an item on the ground. Requires an argument. Arguments should be
@@ -270,6 +292,7 @@ class SudGame:
             try:
                 command = input('> ');
             except EOFError:
+                print("")
                 quit()
             self.parse(command)
 
