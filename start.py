@@ -96,8 +96,8 @@ RoomsDic['1'].addArea('west', RoomsDic['3']) # porto > w > alfandega
 RoomsDic['4'].addArea('north', RoomsDic['1']) # donzela > n > porto
 RoomsDic['5'].addArea('east', RoomsDic['4']) # vila > e > donzela
 
-# Create a player
-char = SudPlayer('Player')
+# Create a character
+char = SudPlayer('Temporary Name')
 
 # Create a game with player and starting area
 game = SudGame(char, RoomsDic['1'])
