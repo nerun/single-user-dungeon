@@ -1,4 +1,3 @@
-import sys
 from libraries import *
 
 # CLASS OBJECTS ================================================================
