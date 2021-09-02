@@ -1,8 +1,7 @@
 # Anaconda SUD
 
 <a href="https://github.com/Nerun/AnacondaSUD/blob/master/LICENSE" target="_blank">
-    <!-- <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />  -->
-    <img alt="License: MIT" src="https://img.shields.io/github/license/NLKNguyen/papercolor-theme.svg?color=blueviolet&maxAge=2592000" />
+    <img alt="License: GPLv2" src="https://img.shields.io/badge/License-MIT-blueviolet" /></a>
 
 ## English
 SUD means for Single User Dungeon: it's like a Multi User Dungeon (MUD) but for single player. An adventure in text mode with elements of both Role Playing Games and sandbox PC games.
