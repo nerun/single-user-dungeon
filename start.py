@@ -85,19 +85,23 @@ for i in BaseRoomsDic:
     RoomsDic[i] = SudArea(desc)
 
 # Attaching interactive stuff to areas
+#  - item_room > item_name > description_file_name
 RoomsDic['1'].addObject('flower', ObjectsDic['rose']) # porto
-RoomsDic['2'].addObject('crap', ObjectsDic['poo']) # praia
+RoomsDic['2'].addObject('carp', ObjectsDic['poo']) # praia
 RoomsDic['3'].addObject('fruit', ObjectsDic['apple']) # alfandega
 RoomsDic['4'].addObject('bird', ObjectsDic['sparrow']) # donzela
+RoomsDic['6'].addObject('metal cylinder', ObjectsDic['lightsaber']) # Town square
 
 # Link all areas with bidirectional references
+#  - existing_room > direction to > new_room
 RoomsDic['1'].addArea('north', RoomsDic['2']) # porto > n > praia
 RoomsDic['1'].addArea('west', RoomsDic['3']) # porto > w > alfandega
 RoomsDic['4'].addArea('north', RoomsDic['1']) # donzela > n > porto
 RoomsDic['5'].addArea('east', RoomsDic['4']) # vila > e > donzela
+RoomsDic['2'].addArea('east', RoomsDic['6']) # praia > e > Town Square
 
 # Create a character
-char = SudPlayer('Temporary Name')
+char = SudPlayer('PlayerName')
 
 # Create a game with player and starting area
 game = SudGame(char, RoomsDic['1'])
