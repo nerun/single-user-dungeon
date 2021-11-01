@@ -16,7 +16,7 @@ RUNNING:
 
 1. Windows: double click start.py
 
-2. Linux, in terminal: python start.py
+2. Linux, in terminal: python3 start.py
 
 3. Type "help" while in game for commands
 
@@ -34,6 +34,6 @@ RODANDO:
 
 1. Windows: duplo clique em start.py
 
-2. Linux, no terminal digite: python start.py
+2. Linux, no terminal digite: python3 start.py
 
 3. Digite "help" durante o jogo para ver os comandos
