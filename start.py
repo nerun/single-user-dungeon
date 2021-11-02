@@ -44,8 +44,6 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 def ShowRoom(Rooms, Number):
     return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7,' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][2:])
 
-ClearScreen()
-
 # Defines default paths and valid extension for files
 RoomsPath = './rooms/'
 ObjectsPath = './objects/'
@@ -67,8 +65,6 @@ ObjectsDic = {}
 for i in BaseObjectsDic:
 # name: Class(name, look, touch, use)
     ObjectsDic[i] = SudObject(i,BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
-
-print (ObjectsDic)
 
 # ROOMS
 # Read folder "rooms" and create dictionary reading files in there
