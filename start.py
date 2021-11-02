@@ -1,4 +1,3 @@
-# -*- coding: cp1252 -*-
 # This file define what exists in the world.
 import glob, copy
 from libraries import *
