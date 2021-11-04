@@ -1,5 +1,5 @@
 # This file define what exists in the world.
-import glob, copy
+import glob, copy, json
 from libraries import *
 from engine import *
 
@@ -32,8 +32,10 @@ def FilesToDict(Path, Ext, IsRoom='no'):
             if IsRoom.lower() == "yes":
                 thisfile[1] = thisfile[1].replace('\n','')
                 thisfile[2] = thisfile[2].replace('\n','')
-        thisfiletuple = tuple(thisfile)
-        Dict[thisfiletuple[0]] = thisfiletuple[1:]
+        thisfilelist = list(thisfile)
+        if IsRoom.lower() == "yes":
+            thisfilelist[1] = json.loads(thisfilelist[1])
+        Dict[thisfilelist[0]] = thisfilelist[1:]
 
     return Dict
 
@@ -42,7 +44,8 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 # Rooms = rooms dictionary
 # Number = specific room number (ID)
 def ShowRoom(Rooms, Number):
-    return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7,' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][2:])
+    result = ' '.join(list(Rooms[Number][0]))
+    return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7, result) + ' ]\n' + ' '.join(Rooms[Number][2:])
 
 # Defines default paths and valid extension for files
 RoomsPath = './rooms/'
@@ -85,11 +88,19 @@ RoomsDic['2'].addObject('crap', ObjectsDic['poo']) # praia
 RoomsDic['3'].addObject('fruit', ObjectsDic['apple']) # alfandega
 RoomsDic['4'].addObject('bird', ObjectsDic['sparrow']) # donzela
 
-# Link all areas with bidirectional references
-RoomsDic['1'].addArea('north', RoomsDic['2']) # porto > n > praia
-RoomsDic['1'].addArea('west', RoomsDic['3']) # porto > w > alfandega
-RoomsDic['4'].addArea('north', RoomsDic['1']) # donzela > n > porto
-RoomsDic['5'].addArea('east', RoomsDic['4']) # vila > e > donzela
+# Link all areas with bidirectional references automatically
+for key in RoomsDic:
+    directions = BaseRoomsDic[key][0]
+    for j in directions:
+        if j == "n":
+            j2 = "north"
+        elif j == "s":
+            j2 = "south"
+        elif j == "e":
+            j2 = "east"
+        elif j == "w":
+            j2 = "west"
+        RoomsDic[key].addArea(j2, RoomsDic[directions[j]])
 
 # Create a character
 char = SudPlayer('Temporary Name')
@@ -98,5 +109,5 @@ char = SudPlayer('Temporary Name')
 game = SudGame(char, RoomsDic['1'])
 
 # Lets go!
-ClearScreen()
+#ClearScreen()
 game.run()
