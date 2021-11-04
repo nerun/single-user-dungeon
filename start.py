@@ -44,8 +44,7 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 # Rooms = rooms dictionary
 # Number = specific room number (ID)
 def ShowRoom(Rooms, Number):
-    result = ' '.join(list(Rooms[Number][0]))
-    return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7, result) + ' ]\n' + ' '.join(Rooms[Number][2:])
+    return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7, ' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][2:])
 
 # Defines default paths and valid extension for files
 RoomsPath = './rooms/'
@@ -109,5 +108,5 @@ char = SudPlayer('Temporary Name')
 game = SudGame(char, RoomsDic['1'])
 
 # Lets go!
-#ClearScreen()
+ClearScreen()
 game.run()
