@@ -17,7 +17,12 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 
         for n, i in enumerate(ListOfFilesB):
             try:
-                int(i)
+                if os.name in ('nt', 'dos', 'ce'):
+                    j = list(i)
+                    i = j[8]
+                    int(i)
+                else:
+                    int(i)
             except ValueError:
                 ListOfFiles.pop(n)
 
