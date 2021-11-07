@@ -11,18 +11,19 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 
     if IsRoom.lower() == "yes":
         for n, i in enumerate(ListOfFilesB):
-            a = i.replace(Path,'')
+            # if 'i' contains \\ switch for /
+            if "\\" in i:                           # new line 1
+                k = i.replace('\\', '/')            # new line 2
+            else:
+                k = i
+
+            a = k.replace(Path,'')                  # variable name change
             b = a.replace(Ext,'')
             ListOfFilesB[n] = b
 
         for n, i in enumerate(ListOfFilesB):
-            try:
-                if os.name in ('nt', 'dos', 'ce'):
-                    j = list(i)
-                    i = j[8]
-                    int(i)
-                else:
-                    int(i)
+            try:                                    # back to origin try/except function
+                int(i)
             except ValueError:
                 ListOfFiles.pop(n)
 
