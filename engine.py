@@ -117,7 +117,7 @@ class SudArea:
 class SudCommand:
     """\n Available commands are:
  drop (d), exit (x), get (g), help (h), inventory (i), look (l), move (n,s,e,w),
- say (y), touch (t), use (u)
+ quit (q), say (y), touch (t), use (u)
 
  For help with a specific command type "help command" or "h command". For
  example: type "help drop" without quotes to get help with drop command.\n"""
@@ -143,6 +143,16 @@ class SudCommand:
 
     def x(self, args):
         """\n X
+ Alias of exit.\n"""
+        return self.exit(args)
+
+    def quit(self, args):
+        """\n QUIT
+ Alias of exit.\n"""
+        return self.exit(args)
+
+    def q(self, args):
+        """\n Q
  Alias of exit.\n"""
         return self.exit(args)
 

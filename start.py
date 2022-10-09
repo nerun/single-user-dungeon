@@ -6,23 +6,19 @@ from engine import *
 # CREATE A DICTIONARY READING FILES IN A FOLDER
 # FilesToDict(*Path, ValidExt, If is room then put yes if not let blank)
 def FilesToDict(Path, Ext, IsRoom='no'):
-    ListOfFiles = glob.glob(Path + '*' + Ext)
+    ListOfFiles = glob.glob(os.path.join(Path, '*' + Ext))
     ListOfFilesB = copy.copy(ListOfFiles)
+
+    rList = (Path, Ext, "/", "\\")
 
     if IsRoom.lower() == "yes":
         for n, i in enumerate(ListOfFilesB):
-            # if 'i' contains \\ switch for /
-            if "\\" in i:                           # new line 1
-                k = i.replace('\\', '/')            # new line 2
-            else:
-                k = i
-
-            a = k.replace(Path,'')                  # variable name change
-            b = a.replace(Ext,'')
-            ListOfFilesB[n] = b
+            for j in rList:
+                i = i.replace(j,'')
+            ListOfFilesB[n] = i
 
         for n, i in enumerate(ListOfFilesB):
-            try:                                    # back to origin try/except function
+            try:
                 int(i)
             except ValueError:
                 ListOfFiles.pop(n)
@@ -53,8 +49,8 @@ def ShowRoom(Rooms, Number):
     return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7, ' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][2:])
 
 # Defines default paths and valid extension for files
-RoomsPath = './rooms/'
-ObjectsPath = './objects/'
+RoomsPath = 'rooms'
+ObjectsPath = 'objects'
 ValidExt = '.txt'
 
 # Create subdirectories if don't exist
