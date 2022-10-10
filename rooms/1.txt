@@ -1,5 +1,6 @@
 1
 {"n":"2", "s":"4", "w":"3"}
+["rose"]
 Recalcitrant Adventurer's Harbor
     The port's gray sand complements its decaying look very well. Many
 adventurers land here daily, attracted by the stories of gold and glory. There

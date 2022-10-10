@@ -70,22 +70,22 @@ class SudArea:
         except KeyError:
             return None
 
-    def addObject(self, name, obj):
+    def addObject(self, obj):
         if obj != None:
-            self.objects[name] = obj
-            return name + ' was dropped...\n'
+            self.objects[obj.name] = obj
+            return obj.name + ' was dropped...\n'
 
     def getObject(self, name):
         if name in self.objects:
             return self.objects.pop(name)
         else:
-            return 'There is no ' + name + ' around!\n'
+            return 'There is no \"' + name + '\" around!\n'
 
     def touchObject(self, name):
         if name in self.objects:
             return self.objects[name].touch()
         else:
-            return 'There is no ' + name + ' around!\n'
+            return 'There is no \"' + name + '\" around!\n'
 
     def view(self, args = 'around'):
         if (args != '' and args != 'around'):
@@ -95,7 +95,7 @@ class SudArea:
                 try:
                     return self.objects[args].view()
                 except KeyError:
-                    return 'nothing.'
+                    return 'There is no \"' + args + '\" around!\n'
         else:
             objects = []
             for v in self.objects.items():
@@ -117,7 +117,7 @@ class SudArea:
 class SudCommand:
     """\n Available commands are:
  drop (d), exit (x), get (g), help (h), inventory (i), look (l), move (n,s,e,w),
- quit (q), say (y), touch (t), use (u)
+ quit (q), say (y), status (st), touch (t), use (u)
 
  For help with a specific command type "help command" or "h command". For
  example: type "help drop" without quotes to get help with drop command.\n"""
@@ -128,7 +128,7 @@ class SudCommand:
     def drop(self, args):
         """\n DROP
  Drops item from inventory to current area.\n"""
-        return self.area.addObject(args, self.char.drop(args))
+        return self.area.addObject(self.char.drop(args))
 
     def d(self, args):
         """\n D
@@ -201,7 +201,12 @@ class SudCommand:
 
     def look(self, args):
         """\n LOOK (alias: l)
- Show what you see when you look around.\n"""
+ Show what you see when you look around.
+ 
+ look              look around in the current room.
+ look object       look at an object lying in this room.
+ look direction    look in that direction (north, south, east, west): you must
+                   use "look north" instead of "look n", for example.\n"""
         if args == "":
             ClearScreen()
         return self.area.view(args)
@@ -256,7 +261,7 @@ class SudCommand:
 
     def status(self, args):
         """\n STATUS
- Show character sheet.\n"""
+ Shows your character sheet.\n"""
         return self.char.status(args)
 
     def st(self, args):

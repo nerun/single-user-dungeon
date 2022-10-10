@@ -42,11 +42,12 @@ def FilesToDict(Path, Ext, IsRoom='no'):
     return Dict
 
 # SHOW ROOM DESCRIPTION TO PLAYER IN FRIENDLY FORMAT
+# Creates SudArea.sight (engine.py)
 # ShowRoom(FilesToDict(RoomsPath, ValidExt, 'yes'),'1')
 # Rooms = rooms dictionary
 # Number = specific room number (ID)
 def ShowRoom(Rooms, Number):
-    return prcolor(6, Rooms[Number][1]) + '\n[ Exits: ' + prcolor(7, ' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][2:])
+    return prcolor(6, Rooms[Number][2]) + '[ Exits: ' + prcolor(7, ' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][3:])
 
 # Defines default paths and valid extension for files
 RoomsPath = 'rooms'
@@ -78,16 +79,17 @@ BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
 RoomsDic = {}
 # Fulfill final dictionary of rooms
 for i in BaseRoomsDic:
+    # "i" is the room number
     desc = ShowRoom(BaseRoomsDic, i)
 # 'ID' : Class(string: Room title, Exits, Room description)
 # To call an area, use 'ID'
     RoomsDic[i] = SudArea(desc)
 
-# Attaching interactive stuff to areas
-RoomsDic['1'].addObject('flower', ObjectsDic['rose']) # porto
-RoomsDic['2'].addObject('crap', ObjectsDic['poo']) # praia
-RoomsDic['3'].addObject('fruit', ObjectsDic['apple']) # alfandega
-RoomsDic['4'].addObject('bird', ObjectsDic['sparrow']) # donzela
+# Spawn objects automatically by reading rooms files
+for i in RoomsDic:
+    objects_list = json.loads(BaseRoomsDic[i][1])
+    for k in objects_list:
+        RoomsDic[i].addObject(ObjectsDic[k])
 
 # Link all areas with bidirectional references automatically
 for key in RoomsDic:
