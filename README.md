@@ -15,3 +15,7 @@ RUNNING:
 2. Linux, in terminal: python3 start.py
 
 3. Type "help" while in game for commands
+
+KNOWN BUGS:
+
+* When an object is placed in the inventory and there is already an object with the same name inside it, then that object disappears, leaving only one.

@@ -24,3 +24,11 @@ def ClearScreen(lines=100):
         os.system('cls')
     else:
         print('\n' * lines)
+
+if os.name == 'posix':
+    pathbar = "/"
+elif os.name in ('nt', 'dos', 'ce'):
+    pathbar = "\\"
+else:
+    pathbar = "/"
+

@@ -1,20 +1,17 @@
 # This file define what exists in the world.
-import glob, copy, json
+import copy, json
 from libraries import *
 from engine import *
 
 # CREATE A DICTIONARY READING FILES IN A FOLDER
 # FilesToDict(*Path, ValidExt, If is room then put yes if not let blank)
 def FilesToDict(Path, Ext, IsRoom='no'):
-    ListOfFiles = glob.glob(os.path.join(Path, '*' + Ext))
+    ListOfFiles = os.listdir(Path)
     ListOfFilesB = copy.copy(ListOfFiles)
-
-    rList = (Path, Ext, "/", "\\")
 
     if IsRoom.lower() == "yes":
         for n, i in enumerate(ListOfFilesB):
-            for j in rList:
-                i = i.replace(j,'')
+            i = i.replace(Ext,'')
             ListOfFilesB[n] = i
 
         for n, i in enumerate(ListOfFilesB):
@@ -26,7 +23,8 @@ def FilesToDict(Path, Ext, IsRoom='no'):
     Dict = {}
 
     for i in ListOfFiles:
-        fileread = open(i,"r")
+        # pathbar is defined in libraries.py as "/" or "\\"
+        fileread = open(Path+pathbar+i,"r")
         thisfile = fileread.readlines()
         fileread.close()
         for i in thisfile:
