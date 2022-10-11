@@ -1,7 +1,19 @@
+#!/usr/bin/env python3
 # This file define what exists in the world.
 import copy, json
 from libraries import *
 from engine import *
+
+# Defines default paths and valid extension for files
+RoomsPath = 'rooms'
+ObjectsPath = 'objects'
+ValidExt = '.txt'
+
+# Create subdirectories if don't exist
+if os.path.isdir(RoomsPath) is False:
+    os.mkdir(RoomsPath)
+if os.path.isdir(ObjectsPath) is False:
+    os.mkdir(ObjectsPath)
 
 # CREATE A DICTIONARY READING FILES IN A FOLDER
 # FilesToDict(*Path, ValidExt, If is room then put yes if not let blank)
@@ -47,40 +59,28 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 def ShowRoom(Rooms, Number):
     return prcolor(6, Rooms[Number][2]) + '[ Exits: ' + prcolor(7, ' '.join(list(Rooms[Number][0]))) + ' ]\n' + ' '.join(Rooms[Number][3:])
 
-# Defines default paths and valid extension for files
-RoomsPath = 'rooms'
-ObjectsPath = 'objects'
-ValidExt = '.txt'
-
-# Create subdirectories if don't exist
-if os.path.isdir(RoomsPath) is False:
-    os.mkdir(RoomsPath)
-if os.path.isdir(ObjectsPath) is False:
-    os.mkdir(ObjectsPath)
-
 # OBJECTS
 # Read folder "objects" and create dictionary reading files in there
 # name: (look, touch, use)
 BaseObjectsDic = FilesToDict(ObjectsPath, ValidExt)
-# Void final dictionary of objects
+
 ObjectsDic = {}
-# Fulfill final dictionary of objects (object name: atribute 1, attribute 2 etc)
+
 for i in BaseObjectsDic:
-# name: Class(name, look, touch, use)
+    # name: Class(name, look, touch, use)
     ObjectsDic[i] = SudObject(i,BaseObjectsDic[i][0],BaseObjectsDic[i][1],BaseObjectsDic[i][2])
 
 # ROOMS
 # Read folder "rooms" and create dictionary reading files in there
 # IDs : (Exits, Room title, Room description)
 BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
-# Void final dictionary of rooms
+
 RoomsDic = {}
-# Fulfill final dictionary of rooms
+
 for i in BaseRoomsDic:
     # "i" is the room number
     desc = ShowRoom(BaseRoomsDic, i)
-# 'ID' : Class(string: Room title, Exits, Room description)
-# To call an area, use 'ID'
+    # 'ID' : Class(string: Room title, Exits, Room description)
     RoomsDic[i] = SudArea(desc)
 
 # Spawn objects automatically by reading rooms files
