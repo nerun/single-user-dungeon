@@ -7,7 +7,7 @@ from engine import *
 # Defines default paths and valid extension for files
 RoomsPath = 'rooms'
 ObjectsPath = 'objects'
-ValidExt = '.txt'
+Ext = '.txt'
 
 # Create subdirectories if don't exist
 if os.path.isdir(RoomsPath) is False:
@@ -16,8 +16,8 @@ if os.path.isdir(ObjectsPath) is False:
     os.mkdir(ObjectsPath)
 
 # CREATE A DICTIONARY READING FILES IN A FOLDER
-# FilesToDict(*Path, ValidExt, If is room then put yes if not let blank)
-def FilesToDict(Path, Ext, IsRoom='no'):
+# FilesToDict(*Path, If is room then put yes if not let blank)
+def FilesToDict(Path, IsRoom='no'):
     ListOfFiles = os.listdir(Path)
     ListOfFilesB = copy.copy(ListOfFiles)
 
@@ -53,7 +53,7 @@ def FilesToDict(Path, Ext, IsRoom='no'):
 
 # SHOW ROOM DESCRIPTION TO PLAYER IN FRIENDLY FORMAT
 # Creates SudArea.sight (engine.py)
-# ShowRoom(FilesToDict(RoomsPath, ValidExt, 'yes'),'1')
+# ShowRoom(FilesToDict(RoomsPath, 'yes'),'1')
 # Rooms = rooms dictionary
 # Number = specific room number (ID)
 def ShowRoom(Rooms, Number):
@@ -62,7 +62,7 @@ def ShowRoom(Rooms, Number):
 # OBJECTS
 # Read folder "objects" and create dictionary reading files in there
 # name: (look, touch, use)
-BaseObjectsDic = FilesToDict(ObjectsPath, ValidExt)
+BaseObjectsDic = FilesToDict(ObjectsPath)
 
 ObjectsDic = {}
 
@@ -73,7 +73,7 @@ for i in BaseObjectsDic:
 # ROOMS
 # Read folder "rooms" and create dictionary reading files in there
 # IDs : (Exits, Room title, Room description)
-BaseRoomsDic = FilesToDict(RoomsPath, ValidExt, 'yes')
+BaseRoomsDic = FilesToDict(RoomsPath, 'yes')
 
 RoomsDic = {}
 
