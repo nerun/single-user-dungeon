@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # This file define what exists in the world.
-import copy, json, locale, textwrap
+import locale, textwrap
 import xml.etree.ElementTree as ET
 from libraries import *
 from engine import *
@@ -12,7 +12,6 @@ DefLang = "en_US"
 # Defines default paths and valid extension for files
 RoomsPath = 'rooms'
 ObjectsPath = 'spawns'
-Ext = '.xml'
 
 # Create subdirectories if don't exist
 if os.path.isdir(RoomsPath) is False:
