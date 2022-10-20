@@ -9,11 +9,11 @@ class SudObject:
         self.collide = collide.capitalize()
         self.usability = usability.capitalize()
     def view(self):
-        return self.sight
+        return self.sight + "\n"
     def touch(self):
-        return self.collide
+        return self.collide + "\n"
     def use(self):
-        return self.usability
+        return self.usability + "\n"
 
 # CLASS PLAYER =================================================================
 class SudPlayer:

@@ -1,5 +1,0 @@
-4
-{"n":"1", "w":"5"}
-["sparrow"]
-Violated Damsel's Beach
-    No description.

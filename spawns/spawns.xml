@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<spawns id="1">
+
+    <object id="1">
+        <name>apple</name>
+        <look>a red fruit the size of a closed fist.</look>
+        <touch>hard but not so, and smooth.</touch>
+        <use>hmmm delicious!</use>
+    </object>
+    
+    <object id="2">
+        <name>poo</name>
+        <look>stinky, brown and with some yellow bits of corn.</look>
+        <touch>it's soft and definitely disgusting.</touch>
+        <use>you are sick, you know that?</use>
+    </object>
+    
+    <object id="3">
+        <name>rose</name>
+        <look>a red blossom with thorns.</look>
+        <touch>the thorns hurt your finger!</touch>
+        <use>you wear it to adorn your clothes.</use>
+    </object>
+    
+    <object id="4">
+        <name>sparrow</name>
+        <look>small, grey-brown bird with thick beak.</look>
+        <touch>it looks delicate.</touch>
+        <use>tweet! Tweet!</use>
+    </object>
+    
+    <object id="5">
+        <name>sword</name>
+        <look>anglo-saxon iron seax 28.4 inches long, single-edged and a long tapering point.</look>
+        <touch>the cold touch of aged iron chills your spine.</touch>
+        <use>you swing the sword in the air with the illusion of knowing what you're doing.</use>
+    </object>
+    
+</spawns>
