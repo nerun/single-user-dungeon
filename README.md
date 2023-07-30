@@ -1,3 +1,12 @@
+```
+ ____   _                _           _   _                   ____
+/ ___| (_) _ __    __ _ | |  ___    | | | |___  ___  _ __   |  _ \  _   _  _ __    __ _   ___  ___   _ __
+\___ \ | || '_ \  / _` || | / _ \   | | | / __|/ _ \| '__|  | | | || | | || '_ \  / _` | / _ \/ _ \ | '_ \
+ ___) || || | | || (_| || ||  __/   | |_| \__ \  __/| |     | |_| || |_| || | | || (_| ||  __/ (_) || | | |
+|____/ |_||_| |_| \__, ||_| \___|    \___/|___/\___||_|     |____/  \__,_||_| |_| \__, | \___|\___/ |_| |_|
+                  |___/                                                           |___/
+```
+
 # SUD Engine
 
 SUD means for "Single User Dungeon": it's like a Multi User Dungeon (MUD) but for single player. In other words, it's a text-mode adventure with elements of both Role Playing Games and sandbox PC games. This is supposed to be just a game engine, not a playable game.
