@@ -1,0 +1,136 @@
+{
+    "objects": {
+        "apple": {
+            "look": "a red fruit the size of a closed fist.",
+            "touch": "hard but not so, and smooth.",
+            "use": "hmmm delicious!"
+        },
+        "poo": {
+            "look": "stinky, brown and with some yellow bits of corn.",
+            "touch": "it's soft, sticky, and definitely disgusting.",
+            "use": "you are sick, you know that?"
+        },
+        "rose": {
+            "look": "a red blossom with thorns.",
+            "touch": "the thorns hurt your finger!",
+            "use": "you wear it to adorn your clothes."
+        },
+        "sparrow": {
+            "look": "small, grey-brown bird with thick beak.",
+            "touch": "it looks delicate.",
+            "use": "Tweet! Tweet!"
+        },
+        "seax": {
+            "look": "anglo-saxon iron short sword 28.4 inches long, single-edged and a long tapering point.",
+            "touch": "the cold touch of aged iron chills your spine.",
+            "use": "you swing the sword in the air with the illusion of knowing what you're doing."
+        }
+    },
+    "rooms": {
+        "1": {
+            "zone": "1",
+            "title": "Recalcitrant Adventurer's Harbor",
+            "description": "The port's gray sand complements its decaying look very well. Many adventurers land here daily, attracted by the stories of gold and glory. There are also many fishermen and villagers from the local village doing their jobs or trying to extract some coin from the newcomers.\nThe Recalcitrant Adventurer's Harbor has been the gateway for all kinds of adventurous spirits into the Realm of Shambles. Of course, this vast region does not deserve to be called a \"kingdom\" but, without a doubt, it well deserves the demeritable nickname of \"shambles\" as it is truly a lawless land. In fact, it is officially called \"vastness\", and there are many here who declare themselves kings and princes, or some other title.\nThese powers rule in city-states or small regions over which they manage to impose their authority. However, in the Realm of Shambles nothing lasts, princes fall and rise day after day.\nThe beach stretches from north to south, and to the east is the great sea through which adventurers arrive. To the west there appears to be a customs house.",
+            "exits": {
+                "north": "2",
+                "south": "4",
+                "west": "3"
+            },
+            "spawns": {
+                "rose": "1"
+            }
+        },
+        "2": {
+            "zone": "1",
+            "title": "Drowned Man's Beach",
+            "description": "No description.",
+            "exits": {
+                "south": "1"
+            },
+            "spawns": {
+                "poo": "1"
+            }
+        },
+        "3": {
+            "zone": "1",
+            "title": "Customs House",
+            "description": "No description.",
+            "exits": {
+                "east": "1"
+            },
+            "spawns": {
+                "apple": "1"
+            }
+        },
+        "4": {
+            "zone": "1",
+            "title": "Violated Damsel's Beach",
+            "description": "A bad name for a beach, but suitable for a sad story, never forgotten by the villagers. A reminder that not all adventurers who come to these lands are heroes. A lone tree, dry and dead, full of women's underwear swaying in the wind completes the scene.\nTo the north lies the harbor, to the west a hamlet can be seen.",
+            "exits": {
+                "north": "1",
+                "west": "5"
+            },
+            "spawns": {
+                "sparrow": "1"
+            }
+        },
+        "5": {
+            "zone": "1",
+            "title": "Boots Fisherman's Hamlet",
+            "description": "No description.",
+            "exits": {
+                "east": "4"
+            },
+            "spawns": {
+                "seax": "1"
+            }
+        }
+    },
+    "engine": {
+        "a_item_is_here": "A %s is here.",
+        "an_item_is_here": "An %s is here.",
+        "available_commands": "Available commands are:\n drop (d), exit (x), get (g), help (h), inventory (i), look (l), move (n,s,e,w),\n quit (q), say (y), status (st), touch (t), use (u)\n\n For help with a specific command type \"help command\" or \"h command\". For\n example: type \"help drop\" without quotes to get help with drop command.",
+        "bye": "Bye, bye!",
+        "cant_take": "You cannot take",
+        "char_sheet": "\nCHARACTER SHEET: %s\n  ST %d\n  DX %d\n  IQ %d\n  HT %d\n",
+        "d": "D\n Alias of drop.",
+        "drop": "DROP\n Drops item from inventory to current area.",
+        "e": "E\n Alias of \"move east\".",
+        "exit": "EXIT (aliases: x, quit, q)\n Leave the game.",
+        "get": "GET (alias: g)\n Takes an item from the ground. Requires an argument. Arguments should be the\n name of an item on the ground.",
+        "g": "G\n Alias of get.",
+        "help": "HELP\n Gives you help in general or on a specific topic.",
+        "help_topic_not_found": "Help topic not found.",
+        "h": "H\n Alias of help.",
+        "i": "I\n Alias of inventory.",
+        "inventory_empty": "Your inventory is empty.",
+        "inventory": "INVENTORY (alias: i)\n Displays inventory.",
+        "item_was_dropped": "%s was dropped.",
+        "l": "L\n Alias of look.",
+        "look": "LOOK (alias: l)\n Show what you see when you look around.\n\n look              look around in the current room.\n look object       look at an object lying in this room.\n look direction    look in that direction (north, south, east, west): you must\n                   use \"look north\" instead of \"look n\", for example.",
+        "move": "MOVE (aliases: n, s, e, w)\n Moves in some direction. Requires an argument. Arguments can be: north, south,\n east or west. Example: \"move north\" without quotes.",
+        "n": "N\n Alias of \"move north\".",
+        "nothing_happens": "Nothing happens.",
+        "nothing_that_way": "There seems to be nothing that way.",
+        "placed_inventory": "\"%s\" has been placed in your inventory.",
+        "q": "Q\n Alias of exit.",
+        "quit": "QUIT\n Alias of exit.",
+        "say": "SAY (alias: y)\n Makes character speak something. Requires an argument. Arguments should be\n what player wants his character to say. Example: \"say kawabonga!\" without\n quotes.",
+        "s": "S\n Alias of \"move south\".",
+        "status": "STATUS\n Shows your character sheet.",
+        "st": "ST\n Alias of status.",
+        "there_isnt_around": "There is no \"%s\" around!",
+        "touch": "TOUCH (alias: t)\n Touches an item on the ground. Requires an argument. Arguments should be\n the name of an item on the ground.",
+        "t": "T\n Alias of touch.",
+        "unknown_command": "Unknown command.",
+        "unusable": "Unusable.",
+        "use": "USE (alias: u)\n Uses an existing item inside character's inventory. Requires an argument.\n Arguments should be the name of an item inside character inventory.",
+        "u": "U\n Alias of use.",
+        "w": "W\n Alias of \"move west\".",
+        "x": "X\n Alias of exit.",
+        "you_not_have": "You do not have \"%s\".",
+        "your_inventory": "Your inventory",
+        "you_says": "You says: %s",
+        "y": "Y\n Alias of say."
+    }
+}

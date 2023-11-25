@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from libraries import *
+
+# Language interface file
+engine = language["engine"]
 
 # CLASS OBJECTS ================================================================
 class SudObject:
-    def __init__(self, name, sight, collide = 'Nothing happens.', usability = 'Unusable.'):
+    def __init__(self, name, sight, collide = engine["nothing_happens"], usability = engine["unusable"]):
         self.name = name
         self.sight = sight.capitalize()
         self.collide = collide.capitalize()
@@ -31,19 +35,13 @@ class SudPlayer:
         ClearScreen()
         return area.view()
     def say(self, what):
-        return 'You says: ' + what + '.\n'
+        return engine["you_says"] % (what) + '\n'
     def status(self, args):
-        status = """
-CHARACTER SHEET: %s
-  ST %d
-  DX %d
-  IQ %d
-  HT %d
-""" % (self.name, self.ST, self.DX, self.IQ, self.HT)
+        status = engine["char_sheet"] % (self.name, self.ST, self.DX, self.IQ, self.HT)
         return status
     def take(self, obj):
         self.inventory[obj.name] = obj
-        return self.name + ' puts ' + obj.name + ' in his inventory.\n'
+        return engine["placed_inventory"] % (obj.name) + "\n"
     def touch(self, name):
         if name in self.inventory:
             return self.inventory[name].touch()
@@ -51,7 +49,7 @@ CHARACTER SHEET: %s
         if what in self.inventory:
             return self.inventory[what].use()
         else:
-            return 'You do not have ' + what + '.\n'
+            return engine["you_not_have"] % (what) + '\n'
 
 # CLASS AREA ===================================================================
 class SudArea:
@@ -74,19 +72,19 @@ class SudArea:
     def addObject(self, obj):
         if obj != None:
             self.objects[obj.name] = obj
-            return obj.name + ' was dropped...\n'
+            return engine["item_was_dropped"] % (obj.name) + "\n"
 
     def getObject(self, name):
         if name in self.objects:
             return self.objects.pop(name)
         else:
-            return 'There is no \"' + name + '\" around!\n'
+            return engine["there_isnt_around"] % (name) + "\n"
 
     def touchObject(self, name):
         if name in self.objects:
             return self.objects[name].touch()
         else:
-            return 'There is no \"' + name + '\" around!\n'
+            return engine["there_isnt_around"] % (name) + "\n"
 
     def view(self, args = 'around'):
         if (args != '' and args != 'around'):
@@ -96,7 +94,7 @@ class SudArea:
                 try:
                     return self.objects[args].view()
                 except KeyError:
-                    return 'There is no \"' + args + '\" around!\n'
+                    return engine["there_isnt_around"] % (args) + "\n"
         else:
             objects = []
             for v in self.objects.items():
@@ -104,9 +102,9 @@ class SudArea:
             objects = sorted(objects)
             for i in objects:
                 if i[0] in ('a','e','i','o','u'):
-                    objects[objects.index(i)] = 'An ' + i + ' is here.'
+                    objects[objects.index(i)] = engine["an_item_is_here"] % (i)
                 else:
-                    objects[objects.index(i)] = 'A ' + i + ' is here.'
+                    objects[objects.index(i)] = engine["a_item_is_here"] % (i)
             objectsStr = '\n'.join(objects)
             if (len(objects) >= 1):
                 obsight = prcolor(3,'\n' + objectsStr)
@@ -116,184 +114,142 @@ class SudArea:
 
 # CLASS COMMANDS ===============================================================
 class SudCommand:
-    """\n Available commands are:
- drop (d), exit (x), get (g), help (h), inventory (i), look (l), move (n,s,e,w),
- quit (q), say (y), status (st), touch (t), use (u)
-
- For help with a specific command type "help command" or "h command". For
- example: type "help drop" without quotes to get help with drop command.\n"""
+    __doc__ = "\n " + engine["available_commands"] + "\n"
+    
     def __init__(self, char, area):
         self.char = char
         self.area = area
 
     def drop(self, args):
-        """\n DROP
- Drops item from inventory to current area.\n"""
         return self.area.addObject(self.char.drop(args))
+    drop.__doc__ = "\n " + engine["drop"] + "\n"
 
     def d(self, args):
-        """\n D
- Alias of drop.\n"""
         return self.drop(args)
+    d.__doc__ = "\n " + engine["d"] + "\n"
 
     def exit(self, args):
-        """\n EXIT (alias: x)
- Leave the game.\n"""
-        print(prcolor(5,'\n Bye, bye!\n'))
+        print(prcolor(5, "\n " + engine["bye"]  + "\n"))
         exit()
+    exit.__doc__ = "\n " + engine["exit"] + "\n"
 
     def x(self, args):
-        """\n X
- Alias of exit.\n"""
         return self.exit(args)
+    x.__doc__ = "\n " + engine["x"] + "\n"
 
     def quit(self, args):
-        """\n QUIT
- Alias of exit.\n"""
         return self.exit(args)
+    quit.__doc__ = "\n " + engine["quit"] + "\n"
 
     def q(self, args):
-        """\n Q
- Alias of exit.\n"""
         return self.exit(args)
+    q.__doc__ = "\n " + engine["q"] + "\n"
 
     def get(self, args):
-        """\n GET (alias: g)
- Takes an item from the ground. Requires an argument. Arguments should be the
- name of an item on the ground. \n"""
         try:
             return self.char.take(self.area.getObject(args))
         except AttributeError:
-            return 'You cannot take ' + args + '.\n'
+            return engine["cant_take"] + ' ' + args + '.\n'
+    get.__doc__ = "\n " + engine["get"] + "\n"
 
     def g(self, args):
-        """\n G
- Alias of get.\n"""
         return self.get(args)
+    g.__doc__ = "\n " + engine["g"] + "\n"
 
     def help(self, args):
-        """\n HELP
- Gives you help in general or on a specific topic.\n"""
         if args == '':
             return self.__doc__
         else:
             try:
                 return getattr(self, args).__doc__
             except AttributeError:
-                return prcolor(1,'Help topic not found.\n')
+                return prcolor(1,engine["help_topic_not_found"]) + "\n\n " + engine["available_commands"] + "\n"
+    help.__doc__ = "\n " + engine["help"] + "\n"
 
     def h(self, args):
-        """\n H
- Alias of help.\n"""
         return self.help(args)
+    h.__doc__ = "\n " + engine["h"] + "\n"
 
     def inventory(self, args):
-        """\n INVENTORY (alias: i)
- Displays inventory.\n"""
         if len(self.char.inventory) > 0:
-            return self.char.name + ' has:\n - ' + '\n - '.join(self.char.inventory) + '\n'
+            return engine["your_inventory"] + ':\n - ' + '\n - '.join(self.char.inventory) + '\n'
         else:
-            return 'Your inventory is empty.\n'
+            return engine["inventory_empty"] + "\n"
+    inventory.__doc__ = "\n " + engine["inventory"] + "\n"
 
     def i(self, args):
-        """\n I
- Alias of inventory.\n"""
         return self.inventory(args)
+    i.__doc__ = "\n " + engine["i"] + "\n"
 
     def look(self, args):
-        """\n LOOK (alias: l)
- Show what you see when you look around.
- 
- look              look around in the current room.
- look object       look at an object lying in this room.
- look direction    look in that direction (north, south, east, west): you must
-                   use "look north" instead of "look n", for example.\n"""
         if args == "":
             ClearScreen()
         return self.area.view(args)
+    look.__doc__ = "\n " + engine["look"] + "\n"
 
     def l(self, args):
-        """\n L
- Alias of look.\n"""
         return self.look(args)
+    l.__doc__ = "\n " + engine["l"] + "\n"
 
     def move(self, args):
-        """\n MOVE (alias: n, s, e, w)
- Moves in some direction. Requires an argument. Arguments can be: north, south,
- east or west. Example: "move north" without quotes.\n"""
         area = self.area.relocate(args)
         if area != None:
             self.area = area
             return self.char.move(self.area)
         else:
-            return 'There seems to be nothing that way.\n'
+            return engine["nothing_that_way"] + "\n"
+    move.__doc__ = "\n " + engine["move"] + "\n"
 
     def n(self, args):
-        """\n N
- Alias of "move north".\n"""
         return self.move('north')
+    n.__doc__ = "\n " + engine["n"] + "\n"
 
     def s(self, args):
-        """\n S
- Alias of "move south".\n"""
         return self.move('south')
+    s.__doc__ = "\n " + engine["s"] + "\n"
 
     def e(self, args):
-        """\n E
- Alias of "move east".\n"""
         return self.move('east')
+    e.__doc__ = "\n " + engine["e"] + "\n"
 
     def w(self, args):
-        """\n W
- Alias of "move west".\n"""
         return self.move('west')
+    w.__doc__ = "\n " + engine["w"] + "\n"
 
     def say(self, args):
-        """\n SAY
- Makes character speak something. Requires an argument. Arguments should be
- what player wants his character to say. Example: "say kawabonga!" without
- quotes.\n"""
         return self.char.say(args)
+    say.__doc__ = "\n " + engine["say"] + "\n"
 
     def y(self, args):
-        """\n Y
- Alias of say.\n"""
         return self.say(args)
+    y.__doc__ = "\n " + engine["y"] + "\n"
 
     def status(self, args):
-        """\n STATUS
- Shows your character sheet.\n"""
         return self.char.status(args)
+    status.__doc__ = "\n " + engine["status"] + "\n"
 
     def st(self, args):
-        """\n ST
- Alias of status.\n"""
         return self.status(args)
+    st.__doc__ = "\n " + engine["st"] + "\n"
 
     def touch(self, args):
-        """\n TOUCH
- Touches an item on the ground. Requires an argument. Arguments should be
- the name of an item on the ground.\n"""
         if args in self.char.inventory:
             return self.char.touch(args)
         else:
             return self.area.touchObject(args)
+    touch.__doc__ = "\n " + engine["touch"] + "\n"
 
     def t(self, args):
-        """\n T
- Alias of touch.\n"""
         return self.touch(args)
+    t.__doc__ = "\n " + engine["t"] + "\n"
 
     def use(self, args):
-        """\n USE
- Uses an existing item inside character's inventory. Requires an argument.
- Arguments should be the name of an item inside character inventory.\n"""
         return self.char.use(args)
+    use.__doc__ = "\n " + engine["use"] + "\n"
 
     def u(self, args):
-        """\n U
- Alias of use.\n"""
         return self.use(args)
+    u.__doc__ = "\n " + engine["u"] + "\n"
 
 # CLASS GAME ===================================================================
 class SudGame:
@@ -313,16 +269,20 @@ class SudGame:
 
     def parse(self, command):
         comm = command.lower().split(' ')
+        
         try:
             cmd = comm[0]
         except IndexError:
             cmd = 'help'
+        
         try:
             args = comm[1:]
         except IndexError:
             args = []
+        
         try:
             result = getattr(self.cmd, cmd)(' '.join(args).strip())
         except AttributeError:
-            result = prcolor(1,'Unknown command.\n')
+            result = prcolor(1,engine["unknown_command"]) + "\n\n " + engine["available_commands"] + "\n"
+        
         print(result)

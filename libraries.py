@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 # Defines common routines
-import os
+import os, locale, json
 
 # COLORED TEXT
 # Example:
@@ -26,10 +27,20 @@ def ClearScreen(lines=100):
     else:
         print('\n' * lines)
 
-if os.name == 'posix':
-    pathbar = "/"
-elif os.name in ('nt', 'dos', 'ce'):
-    pathbar = "\\"
-else:
-    pathbar = "/"
+# PATHSLASH
+if os.name in ('nt', 'dos', 'ce'): # Windows
+    pathslash = "\\"
+else: # Posix
+    pathslash = "/"
 
+# DEFINES SYSTEM LANGUAGE FILE =================================================
+LangPath = "language" + pathslash
+
+SysLangFilePath = LangPath + locale.getdefaultlocale()[0] + '.json'
+
+try:
+    with open(SysLangFilePath) as language_file:
+        language = json.load(language_file)
+except:
+    with open(LangPath + 'en.json') as language_file:
+        language = json.load(language_file)

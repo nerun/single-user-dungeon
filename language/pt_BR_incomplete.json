@@ -1,0 +1,89 @@
+{
+    "objects": {
+        "apple": {
+            "look": "uma fruta vermelha do tamanho de um punho fechado.",
+            "touch": "dura, mas não tanto, e lisa.",
+            "use": "hmmm deliciosa!"
+        },
+        "poo": {
+            "look": "fedorenta, marrom e com alguns pedaços amarelos de milho.",
+            "touch": "é macia, pegajosa e definitivamente nojenta.",
+            "use": "você é doente, sabia disso?"
+        },
+        "rose": {
+            "look": "uma flor vermelha com espinhos.",
+            "touch": "os espinhos machucam seu dedo!",
+            "use": "você a usa para adornar suas roupas."
+        },
+        "sparrow": {
+            "look": "pássaro pequeno, marrom-acinzentado, com bico grosso.",
+            "touch": "parece delicado.",
+            "use": "Piu-piu! Piu-piu!"
+        },
+        "seax": {
+            "look": "espada curta de ferro anglo-saxônica com 72,14 cm de comprimento, gume de um lado só e ponta longa e afilada.",
+            "touch": "o toque frio do ferro envelhecido arrepia sua espinha.",
+            "use": "você balança a espada no ar com a ilusão de saber o que está fazendo."
+        }
+    },
+    "rooms": {
+        "1": {
+            "zone": "1",
+            "title": "Porto do Aventureiro Recalcitrante",
+            "description": "A areia cinzenta do porto complementa muito bem o seu aspecto decadente. Muitos aventureiros desembarcam aqui diariamente, atraídos pelas histórias de ouro e glória. Há também muitos pescadores e aldeões da aldeia local fazendo seus trabalhos ou tentando extrair alguma moeda dos recém-chegados.\nO Porto do Aventureiro Recalcitrante tem sido a porta de entrada para todos os tipos de espíritos aventureiros no Reino da Balbúrdia. É claro que esta vasta região não merece ser chamada de \"reino\", mas, sem dúvida, merece o apelido demeritório de \"balbúrdia\", pois é realmente uma terra sem lei. Na verdade, é oficialmente conhecida como \"vastidão\", e há muitos aqui que se declaram reis e príncipes, ou algum outro título.\nEssas potestades governam cidades-estados ou pequenas regiões sobre as quais conseguem impor a sua autoridade. No entanto, no Reino da Balbúrdia nada dura, príncipes caem e se levantam dia após dia.\nA praia se estende de norte a sul, e a leste fica o grande mar por onde chegam os aventureiros. A oeste parece haver uma alfândega.",
+            "exits": {
+                "north": "2",
+                "south": "4",
+                "west": "3"
+            },
+            "spawns": {
+                "rose": "1"
+            }
+        },
+        "2": {
+            "zone": "1",
+            "title": "Praia do Afogado",
+            "description": "Sem descrição.",
+            "exits": {
+                "south": "1"
+            },
+            "spawns": {
+                "poo": "1"
+            }
+        },
+        "3": {
+            "zone": "1",
+            "title": "Alfândega",
+            "description": "Sem descrição.",
+            "exits": {
+                "east": "1"
+            },
+            "spawns": {
+                "apple": "1"
+            }
+        },
+        "4": {
+            "zone": "1",
+            "title": "Praia da Donzela Violada",
+            "description": "Um nome ruim para uma praia, mas adequado para uma história triste, nunca esquecida pelos aldeões. Um lembrete de que nem todos os aventureiros que chegam à essas terras são heróis. Uma árvore solitária, seca e morta, repleta de roupas íntimas femininas balançando ao vento completa a cena.\nAo norte encontra-se o porto, a oeste avista-se uma aldeia.",
+            "exits": {
+                "north": "1",
+                "west": "5"
+            },
+            "spawns": {
+                "sparrow": "1"
+            }
+        },
+        "5": {
+            "zone": "1",
+            "title": "Aldeia dos Pescadores de Botas",
+            "description": "Sem descrição.",
+            "exits": {
+                "east": "4"
+            },
+            "spawns": {
+                "seax": "1"
+            }
+        }
+    }
+}
