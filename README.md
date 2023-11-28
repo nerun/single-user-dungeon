@@ -1,35 +1,32 @@
 ```
- ____   _                _         _   _
-/ ___| (_) _ __    __ _ | |  ___  | | | |___  ___  _ __
-\___ \ | || '_ \  / _` || | / _ \ | | | / __|/ _ \| '__|
- ___) || || | | || (_| || ||  __/ | |_| \__ \  __/| |
-|____/ |_||_| |_| \__, ||_| \___|  \___/|___/\___||_|
-                  |___/
-     ____
-    |  _ \  _   _  _ __    __ _   ___  ___   _ __
-    | | | || | | || '_ \  / _` | / _ \/ _ \ | '_ \
-    | |_| || |_| || | | || (_| ||  __/ (_) || | | |
-    |____/  \__,_||_| |_| \__, | \___|\___/ |_| |_|
-                          |___/
+ ____     _   _     ____    
+/ ___|   | | | |   |  _ \   
+\___ \   | | | |   | | | |  
+ ___) |_ | |_| | _ | |_| |_ 
+|____/(_) \___/ (_)|____/(_)
 ```
 
-# SUD Engine
+# Single User Dungeon
 
-SUD means for "Single User Dungeon": it's like a [Multi User Dungeon (MUD)](https://en.wikipedia.org/wiki/Multi-user_dungeon) but for single player. In other words, it's a text-mode adventure with elements of both Role Playing Games and sandbox PC games. This is supposed to be just a game engine, not a playable game.
+**Single User Dungeon** is a text-based adventure with elements of tabletop RPG and sandbox games for PC. It is inspired by the old [Multi-User Dungeons (MUDs)](https://en.wikipedia.org/wiki/Multi-user_dungeon), but focused on individual play. It is assumed that this is just a game engine, not a playable game.
 
-This game engine is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on [his website](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 28th, 2008.
+This game engine is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on his blog [Paranoid Engineering](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 25th, 2008.
 
-REQUIREMENTS:
+### Easy to translate
+
+SUD is easy to translate because it uses JSON files to store information about rooms, objects, and the game interface. You can use the Poedit program, which in version 3.3+ added support for JSON files, and version 3.4 is now available as a flatpak in the Ubuntu/Mint stores.
+
+### Requirements
 
 * Python 3+
 
-RUNNING:
+### Running
 
 1. Start:
    - **Windows**: double click start.py
    - **Linux**: in terminal `python3 start.py`
 2. Type "help" while in game for commands
 
-KNOWN BUGS:
+### Known bugs
 
 * When an object is placed in the inventory and there is already an object with the same name inside it, then that object disappears, leaving only one.
