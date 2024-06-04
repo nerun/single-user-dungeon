@@ -25,14 +25,14 @@ def ShowRoom(roomsdic, roomNum):
                                            initial_indent=' '*indent) for p in paragraphs])
         return textOut
     
-    Title = prcolor(6, roomsdic[roomNum]["title"])
+    Title = span(roomsdic[roomNum]["title"], 'cyan', 'bold')
     
     exits = ""
     
     for i in roomsdic[roomNum]["exits"]:
         exits += i[0] + " "
     
-    Exits= "[ Exits: " + prcolor(3, exits) + "]"
+    Exits= "[ Exits: " + span(exits, 'yellow') + "]"
     
     Desc = printw(roomsdic[roomNum]["description"])
     

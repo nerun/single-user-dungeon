@@ -21,7 +21,7 @@
             "use": "Piu-piu! Piu-piu!"
         },
         "seax": {
-            "look": "espada curta de ferro anglo-saxônica com 72,14 cm de comprimento, gume de um lado só e ponta longa e afilada.",
+            "look": "espada curta de ferro anglo-saxônica com 72,14 cm de comprimento, gume de um\nlado só e ponta longa e afilada.",
             "touch": "o toque frio do ferro envelhecido arrepia sua espinha.",
             "use": "você balança a espada no ar com a ilusão de saber o que está fazendo."
         }

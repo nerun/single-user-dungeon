@@ -107,7 +107,7 @@ class SudArea:
                     objects[objects.index(i)] = engine["a_item_is_here"] % (i)
             objectsStr = '\n'.join(objects)
             if (len(objects) >= 1):
-                obsight = prcolor(3,'\n' + objectsStr)
+                obsight = span('\n' + objectsStr, 'yellow')
             else:
                 obsight = ''
             return self.sight + obsight
@@ -129,7 +129,7 @@ class SudCommand:
     d.__doc__ = "\n " + engine["d"] + "\n"
 
     def exit(self, args):
-        print(prcolor(5, "\n " + engine["bye"]  + "\n"))
+        print(span("\n " + engine["bye"]  + "\n", 'magenta'))
         exit()
     exit.__doc__ = "\n " + engine["exit"] + "\n"
 
@@ -163,7 +163,7 @@ class SudCommand:
             try:
                 return getattr(self, args).__doc__
             except AttributeError:
-                return prcolor(1,engine["help_topic_not_found"]) + "\n\n " + engine["available_commands"] + "\n"
+                return span(engine["help_topic_not_found"], 'red') + "\n\n " + engine["available_commands"] + "\n"
     help.__doc__ = "\n " + engine["help"] + "\n"
 
     def h(self, args):
@@ -283,6 +283,6 @@ class SudGame:
         try:
             result = getattr(self.cmd, cmd)(' '.join(args).strip())
         except AttributeError:
-            result = prcolor(1,engine["unknown_command"]) + "\n\n " + engine["available_commands"] + "\n"
+            result = span(engine["unknown_command"], 'red') + "\n\n " + engine["available_commands"] + "\n"
         
         print(result)
