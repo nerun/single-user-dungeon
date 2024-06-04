@@ -1,9 +1,9 @@
 ```
- ____     _   _     ____    
-/ ___|   | | | |   |  _ \   
-\___ \   | | | |   | | | |  
- ___) |_ | |_| | _ | |_| |_ 
-|____/(_) \___/ (_)|____/(_)
+   ____     _   _     ____
+  / ___|   | | | |   |  _ \
+  \___ \   | | | |   | | | |
+   ___) |_ | |_| | _ | |_| |_
+  |____/(_) \___/ (_)|____/(_)
 ```
 
 [![Python](https://img.shields.io/badge/Python_3-%23244d70?style=flat&logo=python&logoColor=%23ffde58)](https://www.python.org/) [![MIT License](https://img.shields.io/badge/License-%25?style=flat&label=MIT&color=olive)](https://en.wikipedia.org/wiki/MIT_License)
@@ -27,7 +27,7 @@ SUD is easy to translate because it uses JSON files to store information about r
 
 1. Start:
    - **Windows**: double click start.py
-   - **Linux**: in terminal `python3 start.py`
+   - **Linux**: in terminal `python3 start.py` or just `./start.py`
 2. Type "help" while in game for commands
 
 ### Known bugs
