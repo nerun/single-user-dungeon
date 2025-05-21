@@ -26,8 +26,12 @@ SUD is easy to translate because it uses JSON files to store information about r
 ### Running
 
 1. Start:
-   - **Windows**: double click start.py
-   - **Linux**: in terminal `python3 start.py` or just `./start.py`
+
+```console
+cd src
+python3 -m game.main
+```
+
 2. Type "help" while in game for commands
 
 ### Known bugs

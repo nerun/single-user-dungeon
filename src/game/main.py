@@ -64,5 +64,5 @@ char = SudPlayer('Test Player Name')
 game = SudGame(char, RoomsDic['1'])
 
 # START IT!
-ClearScreen()
+clear()
 game.run()

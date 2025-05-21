@@ -32,7 +32,7 @@ class SudPlayer:
         if name in self.inventory:
             return self.inventory.pop(name)
     def move(self, area):
-        ClearScreen()
+        clear()
         return area.view()
     def say(self, what):
         return engine["you_says"] % (what) + '\n'
@@ -183,7 +183,7 @@ class SudCommand:
 
     def look(self, args):
         if args == "":
-            ClearScreen()
+            clear()
         return self.area.view(args)
     look.__doc__ = "\n " + engine["look"] + "\n"
 
