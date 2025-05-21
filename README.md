@@ -11,29 +11,48 @@
 
 # Single User Dungeon
 
-**Single User Dungeon** is a text-based adventure with elements of tabletop RPG and sandbox games for PC. It is inspired by the old [Multi-User Dungeons (MUDs)](https://en.wikipedia.org/wiki/Multi-user_dungeon) but focused on individual play. It is assumed that this is just a game engine, not a playable game, and that it is more for fun and studying [Python](https://www.python.org/) than serious development.
+Text-based adventure engine  
+Inspired by classic [MUDs](https://en.wikipedia.org/wiki/Multi-user_dungeon), focused on **single-player** experience.
 
-This game engine is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on his blog [Paranoid Engineering](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 25th, 2008.
+Written in [Python](https://www.python.org)  
+Create & explore interactive dungeons with RPG & sandbox elements.
 
-### Easy to translate
+Data & translations via JSON files — easy customization.
 
-SUD is easy to translate because it uses JSON files to store information about rooms, objects, and the game interface. You can use the [Poedit](https://poedit.net/) program, which in version 3.3+ added support for JSON files, and version 3.4 is now available as a flatpak in the Ubuntu/Mint stores.
+> [!Note]
+> This game engine is being developed as from the scripts created by Tomas Varaneckas (Vilnius, Lithuania), and released on his blog [Paranoid Engineering](Http://paranoid-engineering.blogspot.com/2008/11/python-mud-game-example.html) on November 25th, 2008.
 
-### Requirements
+---
 
-* Python 3+
+## Requirements
 
-### Running
+- Python 3.8+
+- Standard libs: `json`, `os`, `locale`, `pathlib`
+- No external dependencies
 
-1. Start:
+---
 
-```console
-$ cd src
+## Installation & Running
+
+```bash
+$ git clone https://github.com/nerun/single-user-dungeon.git
+$ cd single-user-dungeon/src
 $ python3 -m game.main
 ```
 
-2. Type "help" while in game for commands
+**Tip:** type `help` inside the game for commands.
 
-### Known bugs
+---
 
-* When an object is placed in the inventory and there is already an object with the same name inside it, then that object disappears, leaving only one.
+## Localization
+
+- Game content (rooms, objects, UI) in `language/` folder JSON files.
+- Add new language: create `<locale_code>.json` (e.g., `fr_FR.json`).
+- Edit manually or with Poedit (v3.3+).
+- Auto-detects system locale, defaults to English if missing.
+
+---
+
+## License
+
+MIT License — see [LICENSE](https://github.com/nerun/single-user-dungeon/raw/main/LICENSE)
