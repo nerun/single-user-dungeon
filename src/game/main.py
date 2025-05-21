@@ -1,68 +1,58 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import textwrap
-from engine import *
+from game.engine import *
 
-# OBJECTS
-# object_name : class engine.SudObject <name, look, touch, use>
-ObjectsDic = {}
 
-for i in language["objects"]:
-    ObjectsDic[i] = SudObject(i, language["objects"][i]["look"],
-                              language["objects"][i]["touch"],
-                              language["objects"][i]["use"])
+def printw(text, columns=80, indent=4):
+    paragraphs = text.splitlines()
+    textOut = "\n".join([textwrap.fill(p, columns, replace_whitespace=False,
+                                       initial_indent=' ' * indent) for p in paragraphs])
+    return textOut
 
-# ROOMS
-# room_number : class engine.SudArea (Exits, Room title, Room description)
-RoomsDic = {}
 
-# Show rooms' description to player in friendly format
-# Creates engine.SudArea.sight
-def ShowRoom(roomsdic, roomNum):
-    def printw(text, columns=80, indent=4):
-        paragraphs = text.splitlines()
-        textOut = "\n".join([textwrap.fill(p, columns, replace_whitespace=False,
-                                           initial_indent=' '*indent) for p in paragraphs])
-        return textOut
-    
-    Title = span(roomsdic[roomNum]["title"], 'cyan', 'bold')
-    
-    exits = ""
-    
-    for i in roomsdic[roomNum]["exits"]:
-        exits += i[0] + " "
-    
-    Exits= "[ Exits: " + span(exits, 'yellow') + "]"
-    
-    Desc = printw(roomsdic[roomNum]["description"])
-    
-    return Title + "\n" + Exits + "\n" + Desc + "\n"
+def show_room(roomsdic, roomNum):
+    title = span(roomsdic[roomNum]["title"], 'cyan', 'bold')
+    exits = "".join([i[0] + " " for i in roomsdic[roomNum]["exits"]])
+    exits_line = "[ Exits: " + span(exits, 'yellow') + "]"
+    desc = printw(roomsdic[roomNum]["description"])
+    return title + "\n" + exits_line + "\n" + desc + "\n"
 
-for i in language["rooms"]:
-    # "i" is the room number as string
-    desc = ShowRoom(language["rooms"], i)
-    # 'ID' : Class(string: Room title, Exits, Room description)
-    RoomsDic[i] = SudArea(desc)
 
-# SPAWN OBJECTS AUTOMATICALLY
-# "room" is the room number as string
-# "spawn" is the object to be spawned as string
-for room in language["rooms"]:
-    for spawn in language["rooms"][room]["spawns"]:
-        RoomsDic[room].addObject(ObjectsDic[spawn])
+def main():
+    # Objects
+    objects_dic = {}
+    for i in language["objects"]:
+        objects_dic[i] = SudObject(
+            i,
+            language["objects"][i]["look"],
+            language["objects"][i]["touch"],
+            language["objects"][i]["use"]
+        )
 
-# LINK ALL AREAS WITH BIDIRECTIONAL REFERENCES AUTOMATICALLY
-for room in RoomsDic:
-    exits = language["rooms"][room]["exits"]
-    for directions in exits:
-        RoomsDic[room].addArea(directions, RoomsDic[exits[directions]])
+    # Rooms
+    rooms_dic = {}
+    for i in language["rooms"]:
+        desc = show_room(language["rooms"], i)
+        rooms_dic[i] = SudArea(desc)
 
-# CREATES A CHARACTER
-char = SudPlayer('Test Player Name')
+    # Spawn objects
+    for room in language["rooms"]:
+        for spawn in language["rooms"][room]["spawns"]:
+            rooms_dic[room].addObject(objects_dic[spawn])
 
-# CREATE A GAME WITH PLAYER AND STARTING AREA
-game = SudGame(char, RoomsDic['1'])
+    # Link areas
+    for room in rooms_dic:
+        exits = language["rooms"][room]["exits"]
+        for direction in exits:
+            rooms_dic[room].addArea(direction, rooms_dic[exits[direction]])
 
-# START IT!
-clear()
-game.run()
+    # Create player and game
+    char = SudPlayer('Test Player Name')
+    game = SudGame(char, rooms_dic['1'])
+
+    # Run
+    clear()
+    game.run()
+
+
+if __name__ == "__main__":
+    main()

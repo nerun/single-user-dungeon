@@ -1,7 +1,8 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-# Defines common routines
-import os, locale, json
+import os
+import locale
+import json
+import pathlib
+
 
 # FORMATTED TEXT
 # span('text red in italic', 'red', 'i')
@@ -55,14 +56,23 @@ if os.name in ('nt', 'dos', 'ce'): # Windows
 else: # Posix
     pathslash = "/"
 
-# DEFINES SYSTEM LANGUAGE FILE =================================================
-LangPath = "language" + pathslash
 
-SysLangFilePath = LangPath + locale.getdefaultlocale()[0] + '.json'
+# === LANGUAGE HANDLING =======================================================
 
+# Base directory of this script
+BASE_DIR = pathlib.Path(__file__).parent
+
+# Language files directory
+LANGUAGE_DIR = BASE_DIR / "language"
+
+# Detect system locale
+locale_code = locale.getdefaultlocale()[0] or "en"
+lang_file = LANGUAGE_DIR / f"{locale_code}.json"
+
+# Load language file, fallback to English if not found
 try:
-    with open(SysLangFilePath) as language_file:
-        language = json.load(language_file)
-except:
-    with open(LangPath + 'en.json') as language_file:
-        language = json.load(language_file)
+    with open(lang_file, encoding="utf-8") as file:
+        language = json.load(file)
+except FileNotFoundError:
+    with open(LANGUAGE_DIR / "en.json", encoding="utf-8") as file:
+        language = json.load(file)

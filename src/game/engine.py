@@ -1,6 +1,4 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-from libraries import *
+from game.libraries import *
 
 # Language interface file
 engine = language["engine"]

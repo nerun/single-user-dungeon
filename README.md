@@ -28,8 +28,8 @@ SUD is easy to translate because it uses JSON files to store information about r
 1. Start:
 
 ```console
-cd src
-python3 -m game.main
+$ cd src
+$ python3 -m game.main
 ```
 
 2. Type "help" while in game for commands

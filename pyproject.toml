@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "single-user-dungeon"
+version = "0.1.0"
+description = "A single-user text-based dungeon crawler."
+authors = [
+  { name="Nerun", email="nerun@example.com" },
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "ruff",
+    "pytest",
+    "pyright",
+]
+
+[project.urls]
+Homepage = "https://github.com/nerun/single-user-dungeon"
+Repository = "https://github.com/nerun/single-user-dungeon"
+Issues = "https://github.com/nerun/single-user-dungeon/issues"
+
+[project.scripts]
+dungeon = "game.main:main"
+
