@@ -143,49 +143,46 @@ class SudCommand:
         self.char = char
         self.area = area
 
+        # Map aliases to real methods
+        self.aliases = {
+            'd': self.drop,
+            'x': self.exit,
+            'quit': self.exit,
+            'q': self.exit,
+            'g': self.get,
+            'h': self.help,
+            'i': self.inventory,
+            'l': self.look,
+            'n': lambda args: self.move('north'),
+            's': lambda args: self.move('south'),
+            'e': lambda args: self.move('east'),
+            'w': lambda args: self.move('west'),
+            'y': self.say,
+            'st': self.status,
+            't': self.touch,
+            'u': self.use
+        }
+
+    def __getattr__(self, name):
+        if name in self.aliases:
+            return self.aliases[name]
+        raise AttributeError(f"'SudCommand' object has no attribute '{name}'")
+
     def drop(self, args):
         return self.area.addObject(self.char.drop(args))
-
     drop.__doc__ = "\n " + engine["drop"] + "\n"
-
-    def d(self, args):
-        return self.drop(args)
-
-    d.__doc__ = "\n " + engine["d"] + "\n"
 
     def exit(self, args):
         print(span("\n " + engine["bye"]  + "\n", 'magenta'))
         exit()
-
     exit.__doc__ = "\n " + engine["exit"] + "\n"
-
-    def x(self, args):
-        return self.exit(args)
-
-    x.__doc__ = "\n " + engine["x"] + "\n"
-
-    def quit(self, args):
-        return self.exit(args)
-
-    quit.__doc__ = "\n " + engine["quit"] + "\n"
-
-    def q(self, args):
-        return self.exit(args)
-
-    q.__doc__ = "\n " + engine["q"] + "\n"
 
     def get(self, args):
         try:
             return self.char.take(self.area.getObject(args))
         except AttributeError:
             return engine["cant_take"] + ' ' + args + '.\n'
-
     get.__doc__ = "\n " + engine["get"] + "\n"
-
-    def g(self, args):
-        return self.get(args)
-
-    g.__doc__ = "\n " + engine["g"] + "\n"
 
     def help(self, args):
         if args == '':
@@ -195,118 +192,50 @@ class SudCommand:
                 return getattr(self, args).__doc__
             except AttributeError:
                 return span(engine["help_topic_not_found"], 'red') + "\n\n " + engine["available_commands"] + "\n"
-
     help.__doc__ = "\n " + engine["help"] + "\n"
 
-    def h(self, args):
-        return self.help(args)
-
-    h.__doc__ = "\n " + engine["h"] + "\n"
-
     def inventory(self, args):
-        if len(self.char.inventory) > 0:
-            inv_list = []
-            for name, data in self.char.inventory.items():
-                qty = data["quantity"]
-                if qty > 1:
-                    inv_list.append(f"{name} ({qty})")
-                else:
-                    inv_list.append(name)
+        if self.char.inventory:
+            inv_list = [f"{name} ({data['quantity']})" if data["quantity"] > 1 else name 
+                        for name, data in self.char.inventory.items()]
             return engine["your_inventory"] + ':\n - ' + '\n - '.join(inv_list) + '\n'
         else:
             return engine["inventory_empty"] + "\n"
-
     inventory.__doc__ = "\n " + engine["inventory"] + "\n"
-
-    def i(self, args):
-        return self.inventory(args)
-
-    i.__doc__ = "\n " + engine["i"] + "\n"
 
     def look(self, args):
         if args == "":
             clear()
         return self.area.view(args)
-
     look.__doc__ = "\n " + engine["look"] + "\n"
-
-    def l(self, args):
-        return self.look(args)
-
-    l.__doc__ = "\n " + engine["l"] + "\n"
 
     def move(self, args):
         area = self.area.relocate(args)
-        if area != None:
+        if area is not None:
             self.area = area
             return self.char.move(self.area)
         else:
             return engine["nothing_that_way"] + "\n"
-
     move.__doc__ = "\n " + engine["move"] + "\n"
-
-    def n(self, args):
-        return self.move('north')
-
-    n.__doc__ = "\n " + engine["n"] + "\n"
-
-    def s(self, args):
-        return self.move('south')
-
-    s.__doc__ = "\n " + engine["s"] + "\n"
-
-    def e(self, args):
-        return self.move('east')
-
-    e.__doc__ = "\n " + engine["e"] + "\n"
-
-    def w(self, args):
-        return self.move('west')
-
-    w.__doc__ = "\n " + engine["w"] + "\n"
 
     def say(self, args):
         return self.char.say(args)
-
     say.__doc__ = "\n " + engine["say"] + "\n"
-
-    def y(self, args):
-        return self.say(args)
-
-    y.__doc__ = "\n " + engine["y"] + "\n"
 
     def status(self, args):
         return self.char.status(args)
-
     status.__doc__ = "\n " + engine["status"] + "\n"
-
-    def st(self, args):
-        return self.status(args)
-
-    st.__doc__ = "\n " + engine["st"] + "\n"
 
     def touch(self, args):
         if args in self.char.inventory:
             return self.char.touch(args)
         else:
             return self.area.touchObject(args)
-
     touch.__doc__ = "\n " + engine["touch"] + "\n"
-
-    def t(self, args):
-        return self.touch(args)
-
-    t.__doc__ = "\n " + engine["t"] + "\n"
 
     def use(self, args):
         return self.char.use(args)
-
     use.__doc__ = "\n " + engine["use"] + "\n"
-
-    def u(self, args):
-        return self.use(args)
-
-    u.__doc__ = "\n " + engine["u"] + "\n"
 
 
 # CLASS GAME ===================================================================
