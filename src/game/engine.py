@@ -3,6 +3,7 @@ from game.libraries import *
 # Language interface file
 engine = language["engine"]
 
+
 # CLASS OBJECTS ================================================================
 class SudObject:
     def __init__(self, name, sight, collide = engine["nothing_happens"], usability = engine["unusable"]):
@@ -10,12 +11,16 @@ class SudObject:
         self.sight = sight.capitalize()
         self.collide = collide.capitalize()
         self.usability = usability.capitalize()
+
     def view(self):
         return self.sight + "\n"
+
     def touch(self):
         return self.collide + "\n"
+
     def use(self):
         return self.usability + "\n"
+
 
 # CLASS PLAYER =================================================================
 class SudPlayer:
@@ -26,28 +31,43 @@ class SudPlayer:
         self.DX = 10
         self.IQ = 10
         self.HT = 10
+    
     def drop(self, name):
         if name in self.inventory:
-            return self.inventory.pop(name)
+            if self.inventory[name]["quantity"] > 1:
+                self.inventory[name]["quantity"] -= 1
+                return self.inventory[name]["object"]
+            else:
+                return self.inventory.pop(name)["object"]
+
     def move(self, area):
         clear()
         return area.view()
+
     def say(self, what):
         return engine["you_says"] % (what) + '\n'
+
     def status(self, args):
         status = engine["char_sheet"] % (self.name, self.ST, self.DX, self.IQ, self.HT)
         return status
+
     def take(self, obj):
-        self.inventory[obj.name] = obj
+        if obj.name in self.inventory:
+            self.inventory[obj.name]["quantity"] += 1
+        else:
+            self.inventory[obj.name] = {"object": obj, "quantity": 1}
         return engine["placed_inventory"] % (obj.name) + "\n"
+
     def touch(self, name):
         if name in self.inventory:
-            return self.inventory[name].touch()
+            return self.inventory[name]["object"].touch()
+
     def use(self, what):
         if what in self.inventory:
-            return self.inventory[what].use()
+            return self.inventory[what]["object"].use()
         else:
             return engine["you_not_have"] % (what) + '\n'
+
 
 # CLASS AREA ===================================================================
 class SudArea:
@@ -62,53 +82,58 @@ class SudArea:
         self.panorama[direction] = area
 
     def relocate(self, args):
-        try:
-            return self.panorama[args]
-        except KeyError:
-            return None
+        return self.panorama.get(args, None)
 
     def addObject(self, obj):
-        if obj != None:
-            self.objects[obj.name] = obj
+        if obj is not None:
+            if obj.name in self.objects:
+                self.objects[obj.name]["quantity"] += 1
+            else:
+                self.objects[obj.name] = {"object": obj, "quantity": 1}
             return engine["item_was_dropped"] % (obj.name) + "\n"
 
     def getObject(self, name):
         if name in self.objects:
-            return self.objects.pop(name)
+            if self.objects[name]["quantity"] > 1:
+                self.objects[name]["quantity"] -= 1
+                return self.objects[name]["object"]
+            else:
+                return self.objects.pop(name)["object"]
         else:
             return engine["there_isnt_around"] % (name) + "\n"
 
     def touchObject(self, name):
         if name in self.objects:
-            return self.objects[name].touch()
+            return self.objects[name]["object"].touch()
         else:
             return engine["there_isnt_around"] % (name) + "\n"
 
-    def view(self, args = 'around'):
-        if (args != '' and args != 'around'):
-            try:
+    def view(self, args='around'):
+        if args and args != 'around':
+            if args in self.panorama:
                 return self.panorama[args].view()
-            except KeyError:
-                try:
-                    return self.objects[args].view()
-                except KeyError:
-                    return engine["there_isnt_around"] % (args) + "\n"
-        else:
-            objects = []
-            for v in self.objects.items():
-                objects.append(v[0])
-            objects = sorted(objects)
-            for i in objects:
-                if i[0] in ('a','e','i','o','u'):
-                    objects[objects.index(i)] = engine["an_item_is_here"] % (i)
-                else:
-                    objects[objects.index(i)] = engine["a_item_is_here"] % (i)
-            objectsStr = '\n'.join(objects)
-            if (len(objects) >= 1):
-                obsight = span('\n' + objectsStr, 'yellow')
+            elif args in self.objects:
+                return self.objects[args]["object"].view()
             else:
-                obsight = ''
+                return engine["there_isnt_around"] % (args) + "\n"
+        else:
+            if not self.objects:
+                return self.sight
+
+            objects_list = []
+            for name, data in sorted(self.objects.items()):
+                qty = data["quantity"]
+                if qty > 1:
+                    item_desc = f"{name} ({qty})"
+                else:
+                    item_desc = name
+
+                article = engine["an_item_is_here"] if item_desc[0].lower() in 'aeiou' else engine["a_item_is_here"]
+                objects_list.append(article % item_desc)
+
+            obsight = span('\n' + '\n'.join(objects_list), 'yellow')
             return self.sight + obsight
+
 
 # CLASS COMMANDS ===============================================================
 class SudCommand:
@@ -120,27 +145,33 @@ class SudCommand:
 
     def drop(self, args):
         return self.area.addObject(self.char.drop(args))
+
     drop.__doc__ = "\n " + engine["drop"] + "\n"
 
     def d(self, args):
         return self.drop(args)
+
     d.__doc__ = "\n " + engine["d"] + "\n"
 
     def exit(self, args):
         print(span("\n " + engine["bye"]  + "\n", 'magenta'))
         exit()
+
     exit.__doc__ = "\n " + engine["exit"] + "\n"
 
     def x(self, args):
         return self.exit(args)
+
     x.__doc__ = "\n " + engine["x"] + "\n"
 
     def quit(self, args):
         return self.exit(args)
+
     quit.__doc__ = "\n " + engine["quit"] + "\n"
 
     def q(self, args):
         return self.exit(args)
+
     q.__doc__ = "\n " + engine["q"] + "\n"
 
     def get(self, args):
@@ -148,10 +179,12 @@ class SudCommand:
             return self.char.take(self.area.getObject(args))
         except AttributeError:
             return engine["cant_take"] + ' ' + args + '.\n'
+
     get.__doc__ = "\n " + engine["get"] + "\n"
 
     def g(self, args):
         return self.get(args)
+
     g.__doc__ = "\n " + engine["g"] + "\n"
 
     def help(self, args):
@@ -162,31 +195,44 @@ class SudCommand:
                 return getattr(self, args).__doc__
             except AttributeError:
                 return span(engine["help_topic_not_found"], 'red') + "\n\n " + engine["available_commands"] + "\n"
+
     help.__doc__ = "\n " + engine["help"] + "\n"
 
     def h(self, args):
         return self.help(args)
+
     h.__doc__ = "\n " + engine["h"] + "\n"
 
     def inventory(self, args):
         if len(self.char.inventory) > 0:
-            return engine["your_inventory"] + ':\n - ' + '\n - '.join(self.char.inventory) + '\n'
+            inv_list = []
+            for name, data in self.char.inventory.items():
+                qty = data["quantity"]
+                if qty > 1:
+                    inv_list.append(f"{name} ({qty})")
+                else:
+                    inv_list.append(name)
+            return engine["your_inventory"] + ':\n - ' + '\n - '.join(inv_list) + '\n'
         else:
             return engine["inventory_empty"] + "\n"
+
     inventory.__doc__ = "\n " + engine["inventory"] + "\n"
 
     def i(self, args):
         return self.inventory(args)
+
     i.__doc__ = "\n " + engine["i"] + "\n"
 
     def look(self, args):
         if args == "":
             clear()
         return self.area.view(args)
+
     look.__doc__ = "\n " + engine["look"] + "\n"
 
     def l(self, args):
         return self.look(args)
+
     l.__doc__ = "\n " + engine["l"] + "\n"
 
     def move(self, args):
@@ -196,38 +242,47 @@ class SudCommand:
             return self.char.move(self.area)
         else:
             return engine["nothing_that_way"] + "\n"
+
     move.__doc__ = "\n " + engine["move"] + "\n"
 
     def n(self, args):
         return self.move('north')
+
     n.__doc__ = "\n " + engine["n"] + "\n"
 
     def s(self, args):
         return self.move('south')
+
     s.__doc__ = "\n " + engine["s"] + "\n"
 
     def e(self, args):
         return self.move('east')
+
     e.__doc__ = "\n " + engine["e"] + "\n"
 
     def w(self, args):
         return self.move('west')
+
     w.__doc__ = "\n " + engine["w"] + "\n"
 
     def say(self, args):
         return self.char.say(args)
+
     say.__doc__ = "\n " + engine["say"] + "\n"
 
     def y(self, args):
         return self.say(args)
+
     y.__doc__ = "\n " + engine["y"] + "\n"
 
     def status(self, args):
         return self.char.status(args)
+
     status.__doc__ = "\n " + engine["status"] + "\n"
 
     def st(self, args):
         return self.status(args)
+
     st.__doc__ = "\n " + engine["st"] + "\n"
 
     def touch(self, args):
@@ -235,19 +290,24 @@ class SudCommand:
             return self.char.touch(args)
         else:
             return self.area.touchObject(args)
+
     touch.__doc__ = "\n " + engine["touch"] + "\n"
 
     def t(self, args):
         return self.touch(args)
+
     t.__doc__ = "\n " + engine["t"] + "\n"
 
     def use(self, args):
         return self.char.use(args)
+
     use.__doc__ = "\n " + engine["use"] + "\n"
 
     def u(self, args):
         return self.use(args)
+
     u.__doc__ = "\n " + engine["u"] + "\n"
+
 
 # CLASS GAME ===================================================================
 class SudGame:

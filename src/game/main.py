@@ -36,8 +36,9 @@ def main():
 
     # Spawn objects
     for room in language["rooms"]:
-        for spawn in language["rooms"][room]["spawns"]:
-            rooms_dic[room].addObject(objects_dic[spawn])
+        for spawn, quantity in language["rooms"][room]["spawns"].items():
+            for _ in range(int(quantity)):
+                rooms_dic[room].addObject(objects_dic[spawn])
 
     # Link areas
     for room in rooms_dic:
