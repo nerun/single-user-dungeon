@@ -1,3 +1,5 @@
+import sys
+
 from game.libraries import *
 
 # Language interface file
@@ -174,7 +176,7 @@ class SudCommand:
 
     def exit(self, args):
         print(span("\n " + engine["bye"]  + "\n", 'magenta'))
-        exit()
+        sys.exit()
     exit.__doc__ = "\n " + engine["exit"] + "\n"
 
     def get(self, args):
@@ -250,8 +252,8 @@ class SudGame:
             try:
                 command = input('> ');
             except EOFError:
-                print("")
-                quit()
+                print()
+                sys.exit()
             self.parse(command)
 
     def parse(self, command):

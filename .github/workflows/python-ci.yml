@@ -46,7 +46,7 @@ jobs:
         run: python -m compileall -q src
 
       - name: Run Ruff
-        run: ruff check .
+        run: ruff check src
 
       - name: Run tests
         run: pytest

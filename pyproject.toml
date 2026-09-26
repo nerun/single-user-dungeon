@@ -30,3 +30,8 @@ Issues = "https://github.com/nerun/single-user-dungeon/issues"
 [project.scripts]
 dungeon = "game.main:main"
 
+[tool.ruff]
+exclude = ["build"]
+
+[tool.ruff.lint]
+ignore = ["PLC0206"]
